@@ -1,16 +1,28 @@
 "use client"
 
 import type { Receta } from "@/lib/types"
-import { Droplets, Layers, Leaf, FlaskConical, Wheat, Star, Utensils } from "lucide-react"
+import { Citrus, Target, Waves, Wheat, Flame, Sparkles, Leaf, Zap, Feather, LucideIcon } from "lucide-react"
 
-const categoryStyle: Record<string, { bg: string; text: string; Icon: React.ElementType }> = {
-  "Salsas":     { bg: "bg-emerald-200", text: "text-emerald-700", Icon: Droplets },
-  "Masas":      { bg: "bg-amber-200",   text: "text-amber-700",   Icon: Layers },
-  "Purés":      { bg: "bg-violet-200",  text: "text-violet-700",  Icon: Leaf },
-  "Panadería":  { bg: "bg-yellow-200",  text: "text-yellow-700",  Icon: Wheat },
-  "Pastelería": { bg: "bg-rose-200",    text: "text-rose-700",    Icon: Star },
-  "Conservas":  { bg: "bg-teal-200",    text: "text-teal-700",    Icon: FlaskConical },
-  "Otros":      { bg: "bg-slate-200",   text: "text-slate-600",   Icon: Utensils },
+const categoryStyle: Record<string, { bg: string; text: string }> = {
+  "Salsas":     { bg: "bg-emerald-300", text: "text-emerald-900" },
+  "Masas":      { bg: "bg-amber-300",   text: "text-amber-900"   },
+  "Purés":      { bg: "bg-violet-300",  text: "text-violet-900"  },
+  "Panadería":  { bg: "bg-yellow-300",  text: "text-yellow-900"  },
+  "Pastelería": { bg: "bg-rose-300",    text: "text-rose-900"    },
+  "Conservas":  { bg: "bg-teal-300",    text: "text-teal-900"    },
+  "Otros":      { bg: "bg-slate-300",   text: "text-slate-900"   },
+}
+
+const recipeIcon: Record<string, LucideIcon> = {
+  "1": Citrus,    // Vinagreta de Limón
+  "2": Target,    // Mermelada de Cebolla
+  "3": Waves,     // Masa de Arepas
+  "4": Wheat,     // Mezcla de Cachapas
+  "5": Flame,     // Salsa Tahini Ahumado
+  "6": Sparkles,  // Puré de Coliflor Caramelizado
+  "7": Leaf,      // Puré de Flores de Coliflor
+  "8": Zap,       // Pickles de Jalapeño
+  "9": Feather,   // Pickles de Cebolla
 }
 
 interface RecipeCardProps {
@@ -19,21 +31,18 @@ interface RecipeCardProps {
 }
 
 export function RecipeCard({ receta, onClick }: RecipeCardProps) {
-  const { bg, text, Icon } = categoryStyle[receta.categoria] ?? { bg: "bg-slate-400", text: "text-white", Icon: Utensils }
+  const { bg, text } = categoryStyle[receta.categoria] ?? { bg: "bg-slate-300", text: "text-slate-900" }
+  const Icon = recipeIcon[receta.id] ?? Layers
 
   return (
     <div
-      className="cursor-pointer rounded-xl border border-border bg-card hover:shadow-md transition-all active:scale-[0.98] overflow-hidden flex flex-col aspect-square"
+      className={`cursor-pointer rounded-xl ${bg} hover:brightness-95 transition-all active:scale-[0.98] aspect-square flex flex-col items-center justify-center gap-3 p-4`}
       onClick={onClick}
     >
-      <div className={`${bg} flex-1 flex items-center justify-center`}>
-        <Icon className={`h-12 w-12 ${text} opacity-90`} />
-      </div>
-      <div className="px-2.5 border-t border-border/50 h-11 flex items-center justify-center">
-        <p className="font-semibold text-sm leading-snug text-foreground line-clamp-2 text-center">
-          {receta.nombre}
-        </p>
-      </div>
+      <Icon className={`h-10 w-10 ${text} opacity-70`} />
+      <p className={`font-bold text-sm leading-snug ${text} text-center line-clamp-3`}>
+        {receta.nombre}
+      </p>
     </div>
   )
 }
