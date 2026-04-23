@@ -29,7 +29,7 @@ export function RecipeCard({ receta, onClick }: RecipeCardProps) {
       <div className={`${bg} flex-1 flex items-center justify-center`}>
         <Icon className={`h-12 w-12 ${text} opacity-90`} />
       </div>
-      <div className="px-2.5 py-2 border-t border-border/50">
+      <div className="px-2.5 border-t border-border/50 h-11 flex items-center justify-center">
         <p className="font-semibold text-sm leading-snug text-foreground line-clamp-2 text-center">
           {receta.nombre}
         </p>
