@@ -20,7 +20,7 @@ export default function Home() {
     <div className="min-h-screen bg-background">
       <AppHeader activeTab={activeTab} onLogoClick={handleLogoClick} />
 
-      <main className="container mx-auto px-4 py-6 pb-24">
+      <main className="px-2 py-4 pb-24 max-w-2xl mx-auto">
         {activeTab === "recetas" && <RecipeList key={resetKey} />}
         {activeTab === "configuracion" && <OvenSettings />}
       </main>
