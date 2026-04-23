@@ -26,8 +26,8 @@ export function RecipeCard({ receta, onClick }: RecipeCardProps) {
       onClick={onClick}
     >
       <div className={`h-1.5 w-full ${accent}`} />
-      <div className="p-3 flex flex-col gap-1">
-        <p className="font-semibold text-sm leading-snug text-foreground line-clamp-2">
+      <div className="px-2.5 py-2">
+        <p className="font-semibold text-xs leading-snug text-foreground line-clamp-2">
           {receta.nombre}
         </p>
       </div>
