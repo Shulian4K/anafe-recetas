@@ -40,7 +40,7 @@ export function RecipeCard({ receta, onClick }: RecipeCardProps) {
       onClick={onClick}
     >
       <Icon className={`h-10 w-10 ${text} opacity-70`} />
-      <p className={`font-bold text-sm leading-snug ${text} text-center line-clamp-3`}>
+      <p className={`font-bold text-base leading-snug ${text} text-center line-clamp-3`}>
         {receta.nombre}
       </p>
     </div>
