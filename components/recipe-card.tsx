@@ -1,15 +1,16 @@
 "use client"
 
 import type { Receta } from "@/lib/types"
+import { Droplets, Layers, Leaf, FlaskConical, Wheat, Star, Utensils } from "lucide-react"
 
-const categoryAccent: Record<string, string> = {
-  "Salsas":     "bg-emerald-400",
-  "Masas":      "bg-amber-400",
-  "Purés":      "bg-violet-400",
-  "Panadería":  "bg-yellow-400",
-  "Pastelería": "bg-rose-400",
-  "Conservas":  "bg-teal-400",
-  "Otros":      "bg-slate-400",
+const categoryStyle: Record<string, { bg: string; text: string; Icon: React.ElementType }> = {
+  "Salsas":     { bg: "bg-emerald-200", text: "text-emerald-700", Icon: Droplets },
+  "Masas":      { bg: "bg-amber-200",   text: "text-amber-700",   Icon: Layers },
+  "Purés":      { bg: "bg-violet-200",  text: "text-violet-700",  Icon: Leaf },
+  "Panadería":  { bg: "bg-yellow-200",  text: "text-yellow-700",  Icon: Wheat },
+  "Pastelería": { bg: "bg-rose-200",    text: "text-rose-700",    Icon: Star },
+  "Conservas":  { bg: "bg-teal-200",    text: "text-teal-700",    Icon: FlaskConical },
+  "Otros":      { bg: "bg-slate-200",   text: "text-slate-600",   Icon: Utensils },
 }
 
 interface RecipeCardProps {
@@ -18,16 +19,18 @@ interface RecipeCardProps {
 }
 
 export function RecipeCard({ receta, onClick }: RecipeCardProps) {
-  const accent = categoryAccent[receta.categoria] ?? "bg-slate-400"
+  const { bg, text, Icon } = categoryStyle[receta.categoria] ?? { bg: "bg-slate-400", text: "text-white", Icon: Utensils }
 
   return (
     <div
-      className="cursor-pointer rounded-lg border border-border bg-card hover:border-primary/30 hover:shadow-sm transition-all active:scale-[0.98] overflow-hidden flex flex-col"
+      className="cursor-pointer rounded-xl border border-border bg-card hover:shadow-md transition-all active:scale-[0.98] overflow-hidden flex flex-col aspect-square"
       onClick={onClick}
     >
-      <div className={`h-1.5 w-full ${accent}`} />
-      <div className="px-2.5 py-2">
-        <p className="font-semibold text-xs leading-snug text-foreground line-clamp-2">
+      <div className={`${bg} flex-1 flex items-center justify-center`}>
+        <Icon className={`h-12 w-12 ${text} opacity-90`} />
+      </div>
+      <div className="px-2.5 py-2 border-t border-border/50">
+        <p className="font-semibold text-xs leading-snug text-foreground line-clamp-2 text-center">
           {receta.nombre}
         </p>
       </div>
