@@ -20,12 +20,9 @@ export default function Home() {
     <div className="min-h-screen bg-background">
       <AppHeader activeTab={activeTab} onLogoClick={handleLogoClick} />
 
-      <main className="px-2 py-4 pb-24 max-w-2xl mx-auto">
-        {activeTab === "recetas" && <RecipeList key={resetKey} />}
-        {activeTab === "configuracion" && <OvenSettings />}
+      <main className="px-2 py-4 pb-6 max-w-2xl mx-auto">
+        <RecipeList key={resetKey} />
       </main>
-
-      <BottomNav activeTab={activeTab} onTabChange={setActiveTab} />
     </div>
   )
 }
