@@ -1,7 +1,7 @@
 "use client"
 
 import type { Receta } from "@/lib/types"
-import { Citrus, Target, Waves, Wheat, Flame, Sparkles, Leaf, Zap, Feather, LucideIcon } from "lucide-react"
+import { Citrus, Target, Waves, Wheat, Flame, Sparkles, Leaf, Zap, Feather, Fish, Layers, LucideIcon } from "lucide-react"
 
 const categoryStyle: Record<string, { bg: string; text: string }> = {
   "Salsas":     { bg: "bg-emerald-300", text: "text-emerald-900" },
@@ -23,6 +23,7 @@ const recipeIcon: Record<string, LucideIcon> = {
   "7": Leaf,      // Puré de Flores de Coliflor
   "8": Zap,       // Pickles de Jalapeño
   "9": Feather,   // Pickles de Cebolla
+  "10": Fish,     // Pil Pil de Pescado
 }
 
 interface RecipeCardProps {
