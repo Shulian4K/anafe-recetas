@@ -4,7 +4,7 @@ import { useState } from "react"
 import { AppHeader } from "@/components/app-header"
 import { BottomNav } from "@/components/bottom-nav"
 import { RecipeList } from "@/components/recipe-list"
-import { OvenSettings } from "@/components/oven-settings"
+import { LaPizarra } from "@/components/la-pizarra"
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState("recetas")
@@ -20,9 +20,12 @@ export default function Home() {
     <div className="min-h-screen bg-background">
       <AppHeader activeTab={activeTab} onLogoClick={handleLogoClick} />
 
-      <main className="px-2 py-4 pb-6 max-w-2xl mx-auto">
-        <RecipeList key={resetKey} />
+      <main className="px-2 py-4 pb-24 max-w-2xl mx-auto">
+        {activeTab === "recetas" && <RecipeList key={resetKey} />}
+        {activeTab === "pizarra" && <LaPizarra />}
       </main>
+
+      <BottomNav activeTab={activeTab} onTabChange={setActiveTab} />
     </div>
   )
 }
