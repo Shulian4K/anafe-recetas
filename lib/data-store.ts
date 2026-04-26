@@ -194,6 +194,26 @@ export const recetas: Receta[] = [
     rendimiento: "900 g aprox.",
     notas: "El líquido de cocción puede reutilizarse hasta dos veces.",
   },
+  {
+    id: "10",
+    nombre: "Pil Pil de Pescado",
+    categoria: "Salsas",
+    ingredientes: [
+      { nombre: "Gelatina de colágeno (corvina, chernia, lisa)", cantidad: 100, unidad: "g", grupo: "Base" },
+      { nombre: "Manteca derretida", cantidad: 300, unidad: "g", grupo: "Grasas" },
+      { nombre: "Beurre noisette", cantidad: 100, unidad: "g", grupo: "Grasas" },
+      { nombre: "Chardonnay reducido", cantidad: 30, unidad: "ml", grupo: "Terminación" },
+    ],
+    instrucciones: [
+      "Calentar la gelatina de colágeno hasta que esté completamente líquida y fluida (60–70°C).",
+      "En Thermomix a 40°C velocidad 3–4, colocar la gelatina caliente.",
+      "Mezclar la manteca derretida con la beurre noisette e incorporar en hilo fino por el bocal mientras la máquina corre, emulsionando de forma continua.",
+      "Agregar el Chardonnay reducido de a poco al final, con la máquina aún en marcha.",
+      "Mantener a 35–40°C para el servicio.",
+    ],
+    notas: "No usar velocidad alta ni trabajar la gelatina semi gelificada: rompe la emulsión. Servir siempre en caliente.",
+    rendimiento: "~530 ml",
+  },
 ]
 
 // Configuraciones de horno
