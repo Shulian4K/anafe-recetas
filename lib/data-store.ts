@@ -194,6 +194,42 @@ export const recetas: Receta[] = [
     rendimiento: "900 g aprox.",
     notas: "El líquido de cocción puede reutilizarse hasta dos veces.",
   },
+  {
+    id: "10",
+    nombre: "Pipil de Cerdo",
+    categoria: "Otros",
+    ingredientes: [
+      // Proteína
+      { nombre: "Bondiola de cerdo sin hueso", cantidad: 2000, unidad: "g", grupo: "Proteína" },
+      // Recado (Marinada)
+      { nombre: "Pasta de achiote", cantidad: 150, unidad: "g", grupo: "Recado" },
+      { nombre: "Jugo de naranja", cantidad: 200, unidad: "ml", grupo: "Recado" },
+      { nombre: "Jugo de limón", cantidad: 100, unidad: "ml", grupo: "Recado" },
+      { nombre: "Vinagre blanco", cantidad: 40, unidad: "ml", grupo: "Recado" },
+      { nombre: "Ajo", cantidad: 6, unidad: "un", grupo: "Recado" },
+      { nombre: "Comino molido", cantidad: 5, unidad: "g", grupo: "Recado" },
+      { nombre: "Orégano seco", cantidad: 3, unidad: "g", grupo: "Recado" },
+      { nombre: "Canela molida", cantidad: 2, unidad: "g", grupo: "Recado" },
+      { nombre: "Clavo de olor molido", cantidad: 1, unidad: "g", grupo: "Recado" },
+      { nombre: "Pimienta negra molida", cantidad: 3, unidad: "g", grupo: "Recado" },
+      { nombre: "Sal fina", cantidad: 20, unidad: "g", grupo: "Recado" },
+      // Cocción
+      { nombre: "Hojas de banana", cantidad: 0, unidad: "c/n", grupo: "Cocción" },
+      { nombre: "Aceite de girasol", cantidad: 20, unidad: "ml", grupo: "Cocción" },
+    ],
+    instrucciones: [
+      "RECADO: Procesar todos los ingredientes del grupo Recado (pasta de achiote, jugos, vinagre, ajo y especias) hasta obtener una marinada homogénea y fluida.",
+      "MARINADO: Cortar la bondiola en trozos grandes de aprox. 400 g. Cubrir completamente con el recado y marinar en frío mínimo 12 horas (ideal 24 hs).",
+      "PREPARACIÓN HOJAS: Pasar las hojas de banana brevemente por llama directa o plancha caliente hasta que cambien de color y se tornen flexibles. Esto evita roturas y activa sus aromas.",
+      "ARMADO: Pincelar las hojas con aceite. Distribuir los trozos de cerdo con toda la marinada en el centro y envolver formando un paquete hermético. Asegurar con hilo de cocina o tiras de la misma hoja.",
+      "COCCIÓN: Llevar al horno a 150°C durante 3.5 a 4 horas. El cerdo debe estar completamente tierno y separarse sin esfuerzo.",
+      "DESCANSO: Retirar del horno y dejar reposar 20 minutos antes de abrir el paquete. Deshilachar la carne (pullear) y mezclar con todos los jugos del paquete.",
+      "REDUCCIÓN (opcional): Filtrar los jugos de cocción y reducir al 50% a fuego medio para obtener una salsa de terminación concentrada.",
+    ],
+    notas: "Corte recomendado: bondiola por su grasa intramuscular, que garantiza jugosidad tras la cocción prolongada. La combinación naranja + limón reemplaza la naranja agria tradicional (difícil de conseguir). La temperatura de 150°C es clave: por encima se reseca, por debajo no se funde el colágeno. El recado puede prepararse en cantidad y congelarse hasta 3 meses.",
+    tiempoPreparacion: "12-24 hs marinado + 4 hs cocción",
+    rendimiento: "~1.4 kg de carne lista (aprox. 7-8 porciones de 180 g)",
+  },
 ]
 
 // Configuraciones de horno
