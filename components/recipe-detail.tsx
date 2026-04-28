@@ -27,15 +27,29 @@ export function RecipeDetail({ receta, onBack }: RecipeDetailProps) {
     return Number(resultado.toFixed(2)).toString()
   }
 
+  const isOpcionA = receta.id === "demo-a"
+  const isOpcionB = receta.id === "demo-b"
+  const tituloClass = isOpcionA
+    ? "text-3xl font-medium text-foreground [font-family:var(--font-fraunces)]"
+    : isOpcionB
+    ? "text-[28px] font-extrabold tracking-tight text-foreground [font-family:var(--font-jakarta)]"
+    : "text-2xl font-bold text-foreground"
+  const seccionClass = isOpcionA
+    ? "text-xl font-medium [font-family:var(--font-fraunces)]"
+    : isOpcionB
+    ? "text-[11px] font-bold uppercase tracking-[0.15em] text-muted-foreground"
+    : "text-lg"
+  const wrapperClass = isOpcionB ? "[font-family:var(--font-jakarta)]" : ""
+
   return (
-    <div className="space-y-6">
+    <div className={`space-y-6 ${wrapperClass}`}>
       {/* Header con botón de volver */}
       <div className="flex items-center gap-4">
         <Button variant="ghost" size="icon" onClick={onBack} className="shrink-0">
           <ArrowLeft className="h-5 w-5" />
         </Button>
         <div className="flex-1 min-w-0">
-          <h1 className="text-2xl font-bold text-foreground truncate">{receta.nombre}</h1>
+          <h1 className={`${tituloClass} truncate`}>{receta.nombre}</h1>
           <div className="flex items-center gap-3 mt-1 flex-wrap">
             <Badge variant="secondary">{receta.categoria}</Badge>
             {receta.tiempoPreparacion && (
@@ -100,7 +114,7 @@ export function RecipeDetail({ receta, onBack }: RecipeDetailProps) {
       {/* Ingredientes */}
       <Card>
         <CardHeader className="pb-3">
-          <CardTitle className="text-lg">Ingredientes</CardTitle>
+          <CardTitle className={seccionClass}>Ingredientes</CardTitle>
         </CardHeader>
         <CardContent className="pt-0">
           <div className="space-y-2">
@@ -144,7 +158,7 @@ export function RecipeDetail({ receta, onBack }: RecipeDetailProps) {
       {/* Instrucciones */}
       <Card>
         <CardHeader className="pb-3">
-          <CardTitle className="text-lg">Instrucciones</CardTitle>
+          <CardTitle className={seccionClass}>Instrucciones</CardTitle>
         </CardHeader>
         <CardContent className="pt-0">
           <ol className="space-y-3">
@@ -164,7 +178,7 @@ export function RecipeDetail({ receta, onBack }: RecipeDetailProps) {
       {receta.notas && (
         <Card className="bg-accent/30 border-accent/50">
           <CardHeader className="pb-2">
-            <CardTitle className="text-lg">Notas</CardTitle>
+            <CardTitle className={seccionClass}>Notas</CardTitle>
           </CardHeader>
           <CardContent className="pt-0">
             <p className="text-foreground leading-relaxed">{receta.notas}</p>
