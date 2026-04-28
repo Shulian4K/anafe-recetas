@@ -25,7 +25,16 @@ export default function Home() {
         {activeTab === "pizarra" && <LaPizarra />}
       </main>
 
-      <BottomNav activeTab={activeTab} onTabChange={setActiveTab} />
+      <BottomNav
+        activeTab={activeTab}
+        onTabChange={(tab) => {
+          setActiveTab(tab)
+          if (tab === "recetas") {
+            setResetKey(k => k + 1)
+            window.scrollTo({ top: 0, behavior: "smooth" })
+          }
+        }}
+      />
     </div>
   )
 }
