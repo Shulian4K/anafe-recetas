@@ -45,7 +45,7 @@ export function RecipeList() {
     return (
       <RecipeDetail 
         receta={recetaSeleccionada} 
-        onBack={() => setRecetaSeleccionada(null)} 
+        onBack={() => { setRecetaSeleccionada(null); window.scrollTo({ top: 0, behavior: "instant" }) }}
       />
     )
   }
