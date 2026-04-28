@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useMemo } from "react"
+import { flushSync } from "react-dom"
 import { recetas, categoriasRecetas } from "@/lib/data-store"
 import type { Receta } from "@/lib/types"
 import { RecipeCard } from "./recipe-card"
@@ -45,7 +46,7 @@ export function RecipeList() {
     return (
       <RecipeDetail 
         receta={recetaSeleccionada} 
-        onBack={() => { setRecetaSeleccionada(null); window.scrollTo({ top: 0, behavior: "instant" }) }}
+        onBack={() => { flushSync(() => setRecetaSeleccionada(null)); window.scrollTo({ top: 0, behavior: "instant" }) }}
       />
     )
   }
