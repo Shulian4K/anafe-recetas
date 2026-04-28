@@ -1,7 +1,6 @@
 "use client"
 
 import { Flame } from "lucide-react"
-import { ThemeToggle } from "./theme-toggle"
 
 interface AppHeaderProps {
   activeTab: string
@@ -13,7 +12,7 @@ export function AppHeader({ activeTab, onLogoClick }: AppHeaderProps) {
 
   return (
     <header className="sticky top-0 z-50 bg-card/95 backdrop-blur-md supports-[backdrop-filter]:bg-card/80 border-b border-border shadow-sm">
-      <div className="container mx-auto px-4 py-3 flex justify-center relative">
+      <div className="container mx-auto px-4 py-3 flex justify-center">
         <button
           onClick={onLogoClick}
           className="flex items-center gap-2.5 hover:opacity-80 transition-opacity active:scale-[0.98]"
@@ -28,9 +27,6 @@ export function AppHeader({ activeTab, onLogoClick }: AppHeaderProps) {
             </p>
           </div>
         </button>
-        <div className="absolute right-4 top-1/2 -translate-y-1/2">
-          <ThemeToggle />
-        </div>
       </div>
     </header>
   )
