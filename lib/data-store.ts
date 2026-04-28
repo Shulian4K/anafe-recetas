@@ -205,10 +205,9 @@ export const recetas: Receta[] = [
       { nombre: "Chardonnay reducido", cantidad: 30, unidad: "ml", grupo: "Terminación" },
     ],
     instrucciones: [
-      "Calentar la gelatina de colágeno hasta que esté completamente líquida y fluida (60–70°C).",
-      "En Thermomix a 40°C velocidad 3–4, colocar la gelatina caliente.",
-      "Mezclar la manteca derretida con la beurre noisette e incorporar en hilo fino por el bocal mientras la máquina corre, emulsionando de forma continua.",
-      "Agregar el Chardonnay reducido de a poco al final, con la máquina aún en marcha.",
+      "Procesar la gelatina en Thermomix a 40°C, velocidad 4.5 durante 5 minutos hasta que emulsione y tome cuerpo.",
+      "Agregar el Chardonnay reducido en cuanto la gelatina ligue.",
+      "Sin interrumpir, incorporar ambas mantecas mezcladas en hilo fino por el bocal (~2 min) hasta obtener una emulsión homogénea y brillante.",
       "Mantener a 35–40°C para el servicio.",
     ],
     notas: "No usar velocidad alta ni trabajar la gelatina semi gelificada: rompe la emulsión. Servir siempre en caliente.",
