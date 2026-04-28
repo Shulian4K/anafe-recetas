@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo, useLayoutEffect, useRef } from "react"
+import { useState, useMemo, useRef } from "react"
 import { recetas, categoriasRecetas } from "@/lib/data-store"
 import type { Receta } from "@/lib/types"
 import { RecipeCard } from "./recipe-card"
@@ -10,19 +10,14 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Search, ChefHat, X } from "lucide-react"
 
-export function RecipeList() {
+interface RecipeListProps {
+  scrollRef?: React.RefObject<HTMLDivElement | null>
+}
+
+export function RecipeList({ scrollRef }: RecipeListProps) {
   const [busqueda, setBusqueda] = useState("")
   const [categoriaActiva, setCategoriaActiva] = useState<string | null>(null)
   const [recetaSeleccionada, setRecetaSeleccionada] = useState<Receta | null>(null)
-  const prevRecetaRef = useRef(recetaSeleccionada)
-  useLayoutEffect(() => {
-    if (prevRecetaRef.current !== null && recetaSeleccionada === null) {
-      history.scrollRestoration = "manual"
-      window.scrollTo({ top: 0 })
-      requestAnimationFrame(() => window.scrollTo({ top: 0 }))
-    }
-    prevRecetaRef.current = recetaSeleccionada
-  }, [recetaSeleccionada])
 
   const recetasFiltradas = useMemo(() => {
     return recetas
@@ -39,7 +34,6 @@ export function RecipeList() {
       .sort((a, b) => categoriasRecetas.indexOf(a.categoria) - categoriasRecetas.indexOf(b.categoria))
   }, [busqueda, categoriaActiva])
 
-  // Obtener categorías que tienen recetas con su conteo
   const categoriasConRecetas = useMemo(() => {
     const conteo = recetas.reduce((acc, r) => {
       acc[r.categoria] = (acc[r.categoria] ?? 0) + 1
@@ -52,9 +46,13 @@ export function RecipeList() {
 
   if (recetaSeleccionada) {
     return (
-      <RecipeDetail 
-        receta={recetaSeleccionada} 
-        onBack={() => setRecetaSeleccionada(null)}
+      <RecipeDetail
+        receta={recetaSeleccionada}
+        scrollRef={scrollRef}
+        onBack={() => {
+          setRecetaSeleccionada(null)
+          scrollRef?.current?.scrollTo({ top: 0 })
+        }}
       />
     )
   }
@@ -74,7 +72,7 @@ export function RecipeList() {
             className="pl-10 pr-10"
           />
           {busqueda && (
-            <button 
+            <button
               onClick={() => setBusqueda("")}
               className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
             >
@@ -123,7 +121,10 @@ export function RecipeList() {
               <RecipeCard
                 key={receta.id}
                 receta={receta}
-                onClick={() => setRecetaSeleccionada(receta)}
+                onClick={() => {
+                  scrollRef?.current?.scrollTo({ top: 0 })
+                  setRecetaSeleccionada(receta)
+                }}
               />
             ))}
           </div>
@@ -134,8 +135,8 @@ export function RecipeList() {
               <p className="text-muted-foreground">
                 No se encontraron recetas con esos criterios.
               </p>
-              <Button 
-                variant="link" 
+              <Button
+                variant="link"
                 className="mt-2"
                 onClick={() => {
                   setBusqueda("")

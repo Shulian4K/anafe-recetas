@@ -10,18 +10,19 @@ import { ArrowLeft, Clock, Scale, Minus, Plus } from "lucide-react"
 interface RecipeDetailProps {
   receta: Receta
   onBack: () => void
+  scrollRef?: React.RefObject<HTMLDivElement | null>
 }
 
-export function RecipeDetail({ receta, onBack }: RecipeDetailProps) {
+export function RecipeDetail({ receta, onBack, scrollRef }: RecipeDetailProps) {
   const [multiplicador, setMultiplicador] = useState(1)
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "instant" })
+    scrollRef?.current?.scrollTo({ top: 0 })
     history.pushState(null, "")
     const handlePop = () => onBack()
     window.addEventListener("popstate", handlePop)
     return () => window.removeEventListener("popstate", handlePop)
-  }, [onBack])
+  }, [onBack, scrollRef])
 
   const ajustarMultiplicador = (delta: number) => {
     const nuevo = Math.max(0.25, Math.round((multiplicador + delta) * 4) / 4)
