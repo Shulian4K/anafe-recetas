@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import type { Receta } from "@/lib/types"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -14,6 +14,8 @@ interface RecipeDetailProps {
 
 export function RecipeDetail({ receta, onBack }: RecipeDetailProps) {
   const [multiplicador, setMultiplicador] = useState(1)
+
+  useEffect(() => { window.scrollTo({ top: 0, behavior: "instant" }) }, [])
 
   const ajustarMultiplicador = (delta: number) => {
     const nuevo = Math.max(0.25, Math.round((multiplicador + delta) * 4) / 4)
