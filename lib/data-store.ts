@@ -199,7 +199,7 @@ export const recetas: Receta[] = [
     nombre: "Pil Pil de Pescado",
     categoria: "Salsas",
     ingredientes: [
-      { nombre: "Gelatina de colágeno (corvina, chernia, lisa)", cantidad: 100, unidad: "g", grupo: "Base" },
+      { nombre: "Gelatina de colágeno", cantidad: 100, unidad: "g", grupo: "Base" },
       { nombre: "Manteca derretida", cantidad: 300, unidad: "g", grupo: "Grasas" },
       { nombre: "Beurre noisette", cantidad: 100, unidad: "g", grupo: "Grasas" },
       { nombre: "Chardonnay reducido", cantidad: 30, unidad: "ml", grupo: "Terminación" },
