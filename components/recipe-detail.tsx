@@ -72,23 +72,25 @@ export function RecipeDetail({ receta, onBack }: RecipeDetailProps) {
             </button>
           ))}
         </div>
-        <div className="flex items-center justify-center gap-3">
-          <button
-            onClick={() => ajustarMultiplicador(-0.25)}
-            disabled={multiplicador <= 0.25}
-            className="h-7 w-7 flex items-center justify-center rounded-full text-muted-foreground hover:text-foreground disabled:opacity-30 transition-colors"
-          >
-            <Minus className="h-3.5 w-3.5" />
-          </button>
-          <span className="font-mono font-semibold text-sm w-10 text-center tabular-nums">
-            {multiplicador}×
-          </span>
-          <button
-            onClick={() => ajustarMultiplicador(0.25)}
-            className="h-7 w-7 flex items-center justify-center rounded-full text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <Plus className="h-3.5 w-3.5" />
-          </button>
+        <div className="flex justify-center">
+          <div className="flex items-center bg-background border border-border rounded-2xl overflow-hidden">
+            <button
+              onClick={() => ajustarMultiplicador(-0.25)}
+              disabled={multiplicador <= 0.25}
+              className="h-10 w-12 flex items-center justify-center text-muted-foreground hover:text-foreground disabled:opacity-30 transition-colors"
+            >
+              <Minus className="h-3.5 w-3.5" />
+            </button>
+            <span className="w-14 text-center font-mono font-bold text-sm tabular-nums border-x border-border h-10 flex items-center justify-center">
+              {multiplicador}×
+            </span>
+            <button
+              onClick={() => ajustarMultiplicador(0.25)}
+              className="h-10 w-12 flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <Plus className="h-3.5 w-3.5" />
+            </button>
+          </div>
         </div>
       </div>
 
