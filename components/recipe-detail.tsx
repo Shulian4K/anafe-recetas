@@ -5,8 +5,7 @@ import type { Receta } from "@/lib/types"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { ArrowLeft, Clock, Scale, Minus, Plus, RotateCcw } from "lucide-react"
+import { ArrowLeft, Clock, Scale, Minus, Plus } from "lucide-react"
 
 interface RecipeDetailProps {
   receta: Receta
@@ -55,27 +54,42 @@ export function RecipeDetail({ receta, onBack }: RecipeDetailProps) {
 
       {/* Multiplicador */}
       <Card className="border-primary/20 bg-primary/5">
-        <CardContent className="py-4">
-          <div className="flex items-center justify-between gap-4 flex-wrap">
-            <span className="font-semibold text-foreground">Multiplicar receta</span>
-            <div className="flex items-center gap-2">
-              <Button variant="outline" size="icon" className="h-9 w-9 shrink-0"
-                onClick={() => ajustarMultiplicador(-0.25)} disabled={multiplicador <= 0.25}>
-                <Minus className="h-4 w-4" />
-              </Button>
-              <Input type="number" value={multiplicador}
-                onChange={(e) => setMultiplicador(Math.max(0.25, parseFloat(e.target.value) || 1))}
-                className="w-20 text-center font-mono font-semibold shrink-0" step={0.25} min={0.25} />
-              <Button variant="outline" size="icon" className="h-9 w-9 shrink-0"
-                onClick={() => ajustarMultiplicador(0.25)}>
-                <Plus className="h-4 w-4" />
-              </Button>
-              <button onClick={() => setMultiplicador(1)}
-                className={`h-9 w-9 shrink-0 flex items-center justify-center rounded-md transition-opacity ${multiplicador !== 1 ? "opacity-40 hover:opacity-70" : "opacity-0 pointer-events-none"}`}
-                tabIndex={multiplicador !== 1 ? 0 : -1}>
-                <RotateCcw className="h-3.5 w-3.5" />
+        <CardContent className="py-5">
+          <p className="text-center text-[11px] font-bold uppercase tracking-[0.15em] text-muted-foreground mb-4">
+            Multiplicar receta
+          </p>
+          <div className="flex justify-center gap-2 mb-3">
+            {[1, 2, 3, 4].map(n => (
+              <button
+                key={n}
+                onClick={() => setMultiplicador(n)}
+                className={`h-10 w-14 rounded-xl text-sm font-bold transition-all active:scale-95 ${
+                  multiplicador === n
+                    ? "bg-primary text-primary-foreground shadow-sm"
+                    : "bg-background/70 text-muted-foreground hover:bg-background border border-border"
+                }`}
+              >
+                ×{n}
               </button>
-            </div>
+            ))}
+          </div>
+          <div className="flex items-center justify-center gap-3">
+            <button
+              onClick={() => ajustarMultiplicador(-0.25)}
+              disabled={multiplicador <= 0.25}
+              className="h-7 w-7 flex items-center justify-center rounded-full text-muted-foreground hover:text-foreground disabled:opacity-30 transition-colors"
+            >
+              <Minus className="h-3.5 w-3.5" />
+            </button>
+            <span className="font-mono font-semibold text-sm w-10 text-center tabular-nums">
+              {multiplicador}×
+            </span>
+            <button
+              onClick={() => ajustarMultiplicador(0.25)}
+              className="h-7 w-7 flex items-center justify-center rounded-full text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <Plus className="h-3.5 w-3.5" />
+            </button>
           </div>
         </CardContent>
       </Card>
