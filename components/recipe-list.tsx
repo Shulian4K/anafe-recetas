@@ -1,7 +1,6 @@
 "use client"
 
-import { useState, useMemo } from "react"
-import { flushSync } from "react-dom"
+import { useState, useMemo, useLayoutEffect, useRef } from "react"
 import { recetas, categoriasRecetas } from "@/lib/data-store"
 import type { Receta } from "@/lib/types"
 import { RecipeCard } from "./recipe-card"
@@ -15,6 +14,13 @@ export function RecipeList() {
   const [busqueda, setBusqueda] = useState("")
   const [categoriaActiva, setCategoriaActiva] = useState<string | null>(null)
   const [recetaSeleccionada, setRecetaSeleccionada] = useState<Receta | null>(null)
+  const prevRecetaRef = useRef(recetaSeleccionada)
+  useLayoutEffect(() => {
+    if (prevRecetaRef.current !== null && recetaSeleccionada === null) {
+      window.scrollTo({ top: 0 })
+    }
+    prevRecetaRef.current = recetaSeleccionada
+  }, [recetaSeleccionada])
 
   const recetasFiltradas = useMemo(() => {
     return recetas
@@ -46,7 +52,7 @@ export function RecipeList() {
     return (
       <RecipeDetail 
         receta={recetaSeleccionada} 
-        onBack={() => { flushSync(() => setRecetaSeleccionada(null)); window.scrollTo({ top: 0, behavior: "instant" }) }}
+        onBack={() => setRecetaSeleccionada(null)}
       />
     )
   }
