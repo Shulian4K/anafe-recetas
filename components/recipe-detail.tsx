@@ -15,7 +15,13 @@ interface RecipeDetailProps {
 export function RecipeDetail({ receta, onBack }: RecipeDetailProps) {
   const [multiplicador, setMultiplicador] = useState(1)
 
-  useEffect(() => { window.scrollTo({ top: 0, behavior: "instant" }) }, [])
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" })
+    history.pushState(null, "")
+    const handlePop = () => onBack()
+    window.addEventListener("popstate", handlePop)
+    return () => window.removeEventListener("popstate", handlePop)
+  }, [onBack])
 
   const ajustarMultiplicador = (delta: number) => {
     const nuevo = Math.max(0.25, Math.round((multiplicador + delta) * 4) / 4)
