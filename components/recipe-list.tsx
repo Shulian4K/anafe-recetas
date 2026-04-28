@@ -17,7 +17,9 @@ export function RecipeList() {
   const prevRecetaRef = useRef(recetaSeleccionada)
   useLayoutEffect(() => {
     if (prevRecetaRef.current !== null && recetaSeleccionada === null) {
+      history.scrollRestoration = "manual"
       window.scrollTo({ top: 0 })
+      requestAnimationFrame(() => window.scrollTo({ top: 0 }))
     }
     prevRecetaRef.current = recetaSeleccionada
   }, [recetaSeleccionada])
