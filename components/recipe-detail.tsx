@@ -52,48 +52,6 @@ export function RecipeDetail({ receta, onBack }: RecipeDetailProps) {
         </div>
       </div>
 
-      {/* Multiplicador */}
-      <Card className="border-primary/20 bg-primary/5">
-        <CardContent className="py-5">
-          <p className="text-center text-[11px] font-bold uppercase tracking-[0.15em] text-muted-foreground mb-4">
-            Multiplicar receta
-          </p>
-          <div className="flex justify-center gap-2 mb-3">
-            {[1, 2, 3, 4].map(n => (
-              <button
-                key={n}
-                onClick={() => setMultiplicador(n)}
-                className={`h-10 w-14 rounded-xl text-sm font-bold transition-all active:scale-95 ${
-                  multiplicador === n
-                    ? "bg-primary text-primary-foreground shadow-sm"
-                    : "bg-background/70 text-muted-foreground hover:bg-background border border-border"
-                }`}
-              >
-                ×{n}
-              </button>
-            ))}
-          </div>
-          <div className="flex items-center justify-center gap-3">
-            <button
-              onClick={() => ajustarMultiplicador(-0.25)}
-              disabled={multiplicador <= 0.25}
-              className="h-7 w-7 flex items-center justify-center rounded-full text-muted-foreground hover:text-foreground disabled:opacity-30 transition-colors"
-            >
-              <Minus className="h-3.5 w-3.5" />
-            </button>
-            <span className="font-mono font-semibold text-sm w-10 text-center tabular-nums">
-              {multiplicador}×
-            </span>
-            <button
-              onClick={() => ajustarMultiplicador(0.25)}
-              className="h-7 w-7 flex items-center justify-center rounded-full text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <Plus className="h-3.5 w-3.5" />
-            </button>
-          </div>
-        </CardContent>
-      </Card>
-
       {/* Ingredientes */}
       <Card>
         <CardHeader className="pb-3">
@@ -131,6 +89,46 @@ export function RecipeDetail({ receta, onBack }: RecipeDetailProps) {
           </div>
         </CardContent>
       </Card>
+
+      {/* Multiplicador */}
+      <div className="rounded-2xl border border-border/60 bg-muted/30 px-4 py-4">
+        <p className="text-center text-[11px] font-bold uppercase tracking-[0.15em] text-muted-foreground mb-4">
+          Multiplicar receta
+        </p>
+        <div className="flex justify-center gap-2 mb-3">
+          {[1, 2, 3, 4].map(n => (
+            <button
+              key={n}
+              onClick={() => setMultiplicador(n)}
+              className={`h-10 w-14 rounded-xl text-sm font-bold transition-all active:scale-95 ${
+                multiplicador === n
+                  ? "bg-primary text-primary-foreground shadow-sm"
+                  : "bg-background text-muted-foreground hover:text-foreground border border-border"
+              }`}
+            >
+              ×{n}
+            </button>
+          ))}
+        </div>
+        <div className="flex items-center justify-center gap-3">
+          <button
+            onClick={() => ajustarMultiplicador(-0.25)}
+            disabled={multiplicador <= 0.25}
+            className="h-7 w-7 flex items-center justify-center rounded-full text-muted-foreground hover:text-foreground disabled:opacity-30 transition-colors"
+          >
+            <Minus className="h-3.5 w-3.5" />
+          </button>
+          <span className="font-mono font-semibold text-sm w-10 text-center tabular-nums">
+            {multiplicador}×
+          </span>
+          <button
+            onClick={() => ajustarMultiplicador(0.25)}
+            className="h-7 w-7 flex items-center justify-center rounded-full text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <Plus className="h-3.5 w-3.5" />
+          </button>
+        </div>
+      </div>
 
       {/* Instrucciones */}
       <Card>
