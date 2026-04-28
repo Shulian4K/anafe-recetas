@@ -14,7 +14,7 @@ const tabs = [
 
 export function BottomNav({ activeTab, onTabChange }: BottomNavProps) {
   return (
-    <nav className="shrink-0 bg-card/95 backdrop-blur-md border-t border-border safe-area-pb">
+    <nav className="fixed bottom-0 inset-x-0 z-50 bg-card/95 backdrop-blur-md border-t border-border safe-area-pb">
       <div className="flex max-w-2xl mx-auto">
         {tabs.map(({ id, label, icon: Icon }) => (
           <button

@@ -25,7 +25,7 @@ export default function Home() {
       <AppHeader activeTab={activeTab} onLogoClick={handleLogoClick} />
 
       <div ref={mainRef} className="flex-1 overflow-y-auto">
-        <div className="px-2 py-4 pb-6 max-w-2xl mx-auto">
+        <div className="px-2 py-4 pb-24 max-w-2xl mx-auto">
           {activeTab === "recetas" && <RecipeList key={resetKey} scrollRef={mainRef} />}
           {activeTab === "pizarra" && <LaPizarra />}
         </div>
