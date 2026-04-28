@@ -52,44 +52,6 @@ export function RecipeDetail({ receta, onBack }: RecipeDetailProps) {
         </div>
       </div>
 
-      {/* Ingredientes */}
-      <Card>
-        <CardHeader className="pb-3">
-          <CardTitle className="text-[11px] font-bold uppercase tracking-[0.15em] text-muted-foreground">Ingredientes</CardTitle>
-        </CardHeader>
-        <CardContent className="pt-0">
-          <div className="space-y-2">
-            {(() => {
-              const grupos = receta.ingredientes.reduce((acc, ing) => {
-                const grupo = ing.grupo || "General"
-                if (!acc[grupo]) acc[grupo] = []
-                acc[grupo].push(ing)
-                return acc
-              }, {} as Record<string, typeof receta.ingredientes>)
-              const gruposKeys = Object.keys(grupos)
-              const tieneGrupos = gruposKeys.length > 1 || gruposKeys[0] !== "General"
-              return gruposKeys.map((grupoNombre, grupoIndex) => (
-                <div key={grupoNombre}>
-                  {tieneGrupos && (
-                    <div className={`text-[10px] font-bold uppercase tracking-widest text-muted-foreground/70 ${grupoIndex > 0 ? "mt-4" : ""} mb-2`}>
-                      {grupoNombre}
-                    </div>
-                  )}
-                  {grupos[grupoNombre].map((ing, index) => (
-                    <div key={index} className="flex items-baseline justify-between gap-4 py-2 border-b border-border/50 last:border-0">
-                      <span className="text-[15px] font-medium text-foreground">{ing.nombre}</span>
-                      <span className="font-mono font-semibold text-primary tabular-nums whitespace-nowrap shrink-0">
-                        {formatearCantidad(ing.cantidad)} {ing.unidad}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              ))
-            })()}
-          </div>
-        </CardContent>
-      </Card>
-
       {/* Multiplicador */}
       <div className="rounded-2xl border border-border/60 bg-muted/30 px-4 py-4">
         <p className="text-center text-[11px] font-bold uppercase tracking-[0.15em] text-muted-foreground mb-4">
@@ -129,6 +91,44 @@ export function RecipeDetail({ receta, onBack }: RecipeDetailProps) {
           </button>
         </div>
       </div>
+
+      {/* Ingredientes */}
+      <Card>
+        <CardHeader className="pb-3">
+          <CardTitle className="text-[11px] font-bold uppercase tracking-[0.15em] text-muted-foreground">Ingredientes</CardTitle>
+        </CardHeader>
+        <CardContent className="pt-0">
+          <div className="space-y-2">
+            {(() => {
+              const grupos = receta.ingredientes.reduce((acc, ing) => {
+                const grupo = ing.grupo || "General"
+                if (!acc[grupo]) acc[grupo] = []
+                acc[grupo].push(ing)
+                return acc
+              }, {} as Record<string, typeof receta.ingredientes>)
+              const gruposKeys = Object.keys(grupos)
+              const tieneGrupos = gruposKeys.length > 1 || gruposKeys[0] !== "General"
+              return gruposKeys.map((grupoNombre, grupoIndex) => (
+                <div key={grupoNombre}>
+                  {tieneGrupos && (
+                    <div className={`text-[10px] font-bold uppercase tracking-widest text-muted-foreground/70 ${grupoIndex > 0 ? "mt-4" : ""} mb-2`}>
+                      {grupoNombre}
+                    </div>
+                  )}
+                  {grupos[grupoNombre].map((ing, index) => (
+                    <div key={index} className="flex items-baseline justify-between gap-4 py-2 border-b border-border/50 last:border-0">
+                      <span className="text-[15px] font-medium text-foreground">{ing.nombre}</span>
+                      <span className="font-mono font-semibold text-primary tabular-nums whitespace-nowrap shrink-0">
+                        {formatearCantidad(ing.cantidad)} {ing.unidad}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              ))
+            })()}
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Instrucciones */}
       <Card>
