@@ -8,7 +8,7 @@ interface AppHeaderProps {
 }
 
 export function AppHeader({ activeTab, onLogoClick }: AppHeaderProps) {
-  const subtitle = activeTab === "pizarra" ? "La Pizarra" : "Recetas"
+  const subtitle = activeTab === "pizarra" ? "La Pizarra" : activeTab === "cocina" ? "Cocina" : "Recetas"
 
   return (
     <header className="sticky top-0 z-50 bg-card/95 backdrop-blur-md supports-[backdrop-filter]:bg-card/80 border-b border-border shadow-sm">

@@ -249,6 +249,55 @@ export const categoriasRecetas = [
   "Otros"
 ]
 
+// Recetas de cocina
+export const recetasCocina: Receta[] = [
+  {
+    id: "c1",
+    nombre: "Masa de Pasta",
+    categoria: "Masas",
+    ingredientes: [
+      { nombre: "Harina 0000", cantidad: 3000, unidad: "g", grupo: "Grupo A" },
+      { nombre: "Yemas egg höns", cantidad: 900, unidad: "g", grupo: "Grupo B" },
+      { nombre: "Agua", cantidad: 600, unidad: "ml", grupo: "Grupo B" },
+    ],
+    instrucciones: [
+      "Disponer la harina (A) en la planetaria. En un bowl aparte, batir las yemas con el agua hasta romperlas.",
+      "Hacer una corona con la harina y agregar el Grupo B. Integrar con el gancho hasta que la masa tome cuerpo.",
+      "Retirar de la planetaria, llevar a la mesada y dividir en dos. Amasar cada bollo hasta obtener una superficie lisa y uniforme.",
+      "Porcionar: spaguetti 110 g | garganelli, sopresinni, barchette 120 g.",
+    ],
+    rendimiento: "4,2 kg de masa",
+  },
+  {
+    id: "c2",
+    nombre: "BBQ Coreana",
+    categoria: "Salsas",
+    ingredientes: [
+      { nombre: "Salsa de soja light", cantidad: 440, unidad: "g", grupo: "Grupo A" },
+      { nombre: "Agua", cantidad: 440, unidad: "g", grupo: "Grupo A" },
+      { nombre: "Azúcar rubia", cantidad: 292, unidad: "g", grupo: "Grupo A" },
+      { nombre: "Vinagre de arroz", cantidad: 84, unidad: "g", grupo: "Grupo A" },
+      { nombre: "Chipotles", cantidad: 80, unidad: "g", grupo: "Grupo A" },
+      { nombre: "Pimienta blanca", cantidad: 10, unidad: "g", grupo: "Grupo A" },
+      { nombre: "Ajo rallado", cantidad: 8, unidad: "dientes", grupo: "Grupo A" },
+      { nombre: "Jengibre rallado", cantidad: 60, unidad: "g", grupo: "Grupo A" },
+      { nombre: "Maizena", cantidad: 30, unidad: "g", grupo: "Grupo B" },
+      { nombre: "Agua", cantidad: 30, unidad: "g", grupo: "Grupo B" },
+    ],
+    instrucciones: [
+      "Poner el Grupo A en olla y cocinar a fuego bajo hasta que se disuelva el azúcar.",
+      "Retirar del fuego, licuar y tamizar.",
+      "Desligar la maizena con el agua (Grupo B) y agregar a la preparación. Volver a llevar a hervor.",
+    ],
+  },
+]
+
+export const categoriasCocina = [
+  "Masas",
+  "Salsas",
+  "Otros",
+]
+
 // Categorías de notas
 export const categoriasNotas = [
   "Conversiones",

@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useMemo, useRef } from "react"
-import { recetas, categoriasRecetas } from "@/lib/data-store"
 import type { Receta } from "@/lib/types"
 import { RecipeCard } from "./recipe-card"
 import { RecipeDetail } from "./recipe-detail"
@@ -12,15 +11,17 @@ import { Search, ChefHat, X } from "lucide-react"
 
 interface RecipeListProps {
   scrollRef?: React.RefObject<HTMLDivElement | null>
+  recetasData: Receta[]
+  categoriasData: string[]
 }
 
-export function RecipeList({ scrollRef }: RecipeListProps) {
+export function RecipeList({ scrollRef, recetasData, categoriasData }: RecipeListProps) {
   const [busqueda, setBusqueda] = useState("")
   const [categoriaActiva, setCategoriaActiva] = useState<string | null>(null)
   const [recetaSeleccionada, setRecetaSeleccionada] = useState<Receta | null>(null)
 
   const recetasFiltradas = useMemo(() => {
-    return recetas
+    return recetasData
       .filter((receta) => {
         const coincideBusqueda = busqueda === "" ||
           receta.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
@@ -31,18 +32,18 @@ export function RecipeList({ scrollRef }: RecipeListProps) {
           receta.categoria === categoriaActiva
         return coincideBusqueda && coincideCategoria
       })
-      .sort((a, b) => categoriasRecetas.indexOf(a.categoria) - categoriasRecetas.indexOf(b.categoria))
+      .sort((a, b) => categoriasData.indexOf(a.categoria) - categoriasData.indexOf(b.categoria))
   }, [busqueda, categoriaActiva])
 
   const categoriasConRecetas = useMemo(() => {
-    const conteo = recetas.reduce((acc, r) => {
+    const conteo = recetasData.reduce((acc, r) => {
       acc[r.categoria] = (acc[r.categoria] ?? 0) + 1
       return acc
     }, {} as Record<string, number>)
-    return categoriasRecetas
+    return categoriasData
       .filter(cat => conteo[cat])
       .map(cat => ({ nombre: cat, total: conteo[cat] }))
-  }, [])
+  }, [recetasData, categoriasData])
 
   if (recetaSeleccionada) {
     return (
@@ -57,7 +58,7 @@ export function RecipeList({ scrollRef }: RecipeListProps) {
     )
   }
 
-  const hayRecetas = recetas.length > 0
+  const hayRecetas = recetasData.length > 0
 
   return (
     <div className="space-y-6">
@@ -93,7 +94,7 @@ export function RecipeList({ scrollRef }: RecipeListProps) {
           >
             Todas
             <span className={`text-xs rounded-full px-1.5 py-0 leading-5 ${categoriaActiva === null ? "bg-primary-foreground/20 text-primary-foreground" : "bg-muted text-muted-foreground"}`}>
-              {recetas.length}
+              {recetasData.length}
             </span>
           </Button>
           {categoriasConRecetas.map(({ nombre, total }) => (
