@@ -341,7 +341,7 @@ export const recetas: Receta[] = [
   {
     id: "18",
     nombre: "Ricotta de Anafe",
-    categoria: "Otros",
+    categoria: "Elaboraciones",
     ingredientes: [
       { nombre: "Leche entera", cantidad: 20, unidad: "l", grupo: "Grupo A" },
       { nombre: "Crema de leche de sachet", cantidad: 2.5, unidad: "l", grupo: "Grupo A" },
@@ -362,7 +362,7 @@ export const recetas: Receta[] = [
   {
     id: "19",
     nombre: "Repollo Braseado",
-    categoria: "Otros",
+    categoria: "Guarniciones",
     ingredientes: [
       { nombre: "Repollos blancos", cantidad: 3, unidad: "u" },
       { nombre: "Aceite de oliva", cantidad: 0, unidad: "c/n" },
@@ -426,7 +426,7 @@ export const recetas: Receta[] = [
   {
     id: "22",
     nombre: "Arroz Marcado",
-    categoria: "Otros",
+    categoria: "Guarniciones",
     ingredientes: [
       { nombre: "Arroz", cantidad: 200, unidad: "g", grupo: "Por porción" },
       { nombre: "Sofrito", cantidad: 150, unidad: "g", grupo: "Por porción" },
@@ -477,7 +477,7 @@ export const recetas: Receta[] = [
   {
     id: "24",
     nombre: "Garam Masala",
-    categoria: "Otros",
+    categoria: "Condimentos",
     ingredientes: [
       { nombre: "Coriandro", cantidad: 0.5, unidad: "taza" },
       { nombre: "Semillas de comino", cantidad: 0.25, unidad: "taza" },
@@ -500,7 +500,7 @@ export const recetas: Receta[] = [
   {
     id: "25",
     nombre: "Fumet de Pescado",
-    categoria: "Otros",
+    categoria: "Fondos",
     ingredientes: [
       { nombre: "Espinas y cabezas de pescado blanco (sin branquias)", cantidad: 0, unidad: "c/n", grupo: "Grupo A" },
       { nombre: "Cebolla", cantidad: 0, unidad: "c/n", grupo: "Grupo B" },
@@ -560,7 +560,7 @@ export const recetas: Receta[] = [
   {
     id: "28",
     nombre: "Caldo de Pollo Dorado",
-    categoria: "Otros",
+    categoria: "Fondos",
     ingredientes: [
       { nombre: "Huesos de pollo dorados", cantidad: 3, unidad: "kg", grupo: "Grupo A" },
       { nombre: "Alitas de pollo doradas", cantidad: 1, unidad: "kg", grupo: "Grupo A" },
@@ -587,7 +587,7 @@ export const recetas: Receta[] = [
   {
     id: "29",
     nombre: "Manzanas Prensadas",
-    categoria: "Otros",
+    categoria: "Guarniciones",
     ingredientes: [
       { nombre: "Azúcar", cantidad: 200, unidad: "g", grupo: "Almíbar" },
       { nombre: "Agua", cantidad: 400, unidad: "ml", grupo: "Almíbar" },
@@ -653,7 +653,7 @@ export const recetas: Receta[] = [
   {
     id: "32",
     nombre: "Pollo Frito",
-    categoria: "Otros",
+    categoria: "Elaboraciones",
     ingredientes: [
       { nombre: "Agua fría", cantidad: 2, unidad: "l", grupo: "Brine A" },
       { nombre: "Sal fina", cantidad: 120, unidad: "g", grupo: "Brine A" },
@@ -807,7 +807,7 @@ export const recetas: Receta[] = [
   {
     id: "40",
     nombre: "Pangrattato de Parmesano",
-    categoria: "Otros",
+    categoria: "Condimentos",
     ingredientes: [
       { nombre: "Focaccia", cantidad: 300, unidad: "g" },
       { nombre: "Reggianito", cantidad: 150, unidad: "g" },
@@ -845,7 +845,7 @@ export const recetas: Receta[] = [
   {
     id: "42",
     nombre: "Paté (Montaje)",
-    categoria: "Otros",
+    categoria: "Elaboraciones",
     ingredientes: [
       { nombre: "Paté", cantidad: 20, unidad: "g" },
       { nombre: "Financier", cantidad: 20, unidad: "g" },
@@ -902,7 +902,7 @@ export const recetas: Receta[] = [
   {
     id: "45",
     nombre: "Ragú de Costilla",
-    categoria: "Otros",
+    categoria: "Elaboraciones",
     ingredientes: [
       { nombre: "Costilla de cerdo deshuesada en cubos pequeños", cantidad: 3, unidad: "kg", grupo: "Grupo A" },
       { nombre: "Cebolla brunoise", cantidad: 1, unidad: "kg", grupo: "Grupo B" },
@@ -924,7 +924,7 @@ export const recetas: Receta[] = [
   {
     id: "46",
     nombre: "Everything Seasoning",
-    categoria: "Otros",
+    categoria: "Condimentos",
     ingredientes: [
       { nombre: "Sésamo blanco", cantidad: 220, unidad: "g", grupo: "Como sal - A" },
       { nombre: "Sésamo negro", cantidad: 150, unidad: "g", grupo: "Como sal - A" },
@@ -948,7 +948,7 @@ export const recetas: Receta[] = [
   {
     id: "47",
     nombre: "Fondo Rojo de Pescado",
-    categoria: "Otros",
+    categoria: "Fondos",
     ingredientes: [
       { nombre: "Espinas, cabezas y aletas de pescado blanco", cantidad: 3.1, unidad: "kg", grupo: "Grupo A" },
       { nombre: "Carcasas y cabezas de langostinos", cantidad: 0, unidad: "c/n", grupo: "Grupo A" },
@@ -974,7 +974,7 @@ export const recetas: Receta[] = [
   {
     id: "48",
     nombre: "Fondo Oscuro de Pollo (Demi Glace)",
-    categoria: "Otros",
+    categoria: "Fondos",
     ingredientes: [
       { nombre: "Carcasa de pollo", cantidad: 6.5, unidad: "kg", grupo: "Grupo A" },
       { nombre: "Alitas de pollo", cantidad: 3, unidad: "kg", grupo: "Grupo A" },
@@ -1096,13 +1096,14 @@ export const notasGenerales: NotaGeneral[] = [
 
 // Categorías de recetas disponibles
 export const categoriasRecetas = [
-  "Panadería",
-  "Pastelería",
   "Masas",
   "Purés",
   "Salsas",
   "Conservas",
-  "Otros"
+  "Fondos",
+  "Elaboraciones",
+  "Guarniciones",
+  "Condimentos"
 ]
 
 // Categorías de notas

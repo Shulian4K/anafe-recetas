@@ -10,6 +10,10 @@ const categoryStyle: Record<string, { bg: string; text: string }> = {
   "Panadería":  { bg: "bg-yellow-300",  text: "text-yellow-900"  },
   "Pastelería": { bg: "bg-rose-300",    text: "text-rose-900"    },
   "Conservas":  { bg: "bg-teal-300",    text: "text-teal-900"    },
+  "Fondos":        { bg: "bg-sky-300",     text: "text-sky-900"     },
+  "Elaboraciones": { bg: "bg-orange-300",  text: "text-orange-900"  },
+  "Guarniciones":  { bg: "bg-lime-300",    text: "text-lime-900"    },
+  "Condimentos":   { bg: "bg-pink-300",    text: "text-pink-900"    },
   "Otros":      { bg: "bg-slate-300",   text: "text-slate-900"   },
 }
 
