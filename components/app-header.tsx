@@ -3,14 +3,13 @@
 import { Flame, Search, X } from "lucide-react"
 
 interface AppHeaderProps {
-  activeTab: string
   onLogoClick: () => void
   busqueda: string
   onBusquedaChange: (v: string) => void
 }
 
-export function AppHeader({ activeTab, onLogoClick, busqueda, onBusquedaChange }: AppHeaderProps) {
-  const subtitle = activeTab === "cocina" ? "Cocina" : "Recetas"
+export function AppHeader({ onLogoClick, busqueda, onBusquedaChange }: AppHeaderProps) {
+  const subtitle = "Recetas"
 
   return (
     <header className="sticky top-0 z-50 bg-card/95 backdrop-blur-md supports-[backdrop-filter]:bg-card/80 border-b border-border shadow-sm">
