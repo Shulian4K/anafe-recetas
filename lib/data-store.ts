@@ -213,6 +213,21 @@ export const recetas: Receta[] = [
     notas: "No usar velocidad alta ni trabajar la gelatina semi gelificada: rompe la emulsión. Servir siempre en caliente.",
     rendimiento: "~530 ml",
   },
+  {
+    id: "test-1",
+    nombre: "Receta de Prueba",
+    categoria: "Otros",
+    ingredientes: [
+      { nombre: "Ingrediente de prueba 1", cantidad: 100, unidad: "g" },
+      { nombre: "Ingrediente de prueba 2", cantidad: 2, unidad: "u" },
+    ],
+    instrucciones: [
+      "Esta es una receta de prueba para verificar que la carga de recetas funciona.",
+      "Se puede borrar sin problema.",
+    ],
+    notas: "Receta de prueba — borrar antes de usar en serio.",
+    rendimiento: "1 prueba",
+  },
 ]
 
 // Configuraciones de horno
