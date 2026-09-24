@@ -5,13 +5,11 @@ import { recetas, categoriasRecetas } from "@/lib/data-store"
 import type { Receta } from "@/lib/types"
 import { RecipeCard } from "./recipe-card"
 import { RecipeDetail } from "./recipe-detail"
-import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Search, ChefHat, X } from "lucide-react"
+import { Search, ChefHat } from "lucide-react"
 
-export function RecipeList() {
-  const [busqueda, setBusqueda] = useState("")
+export function RecipeList({ busqueda = "" }: { busqueda?: string }) {
   const [categoriaActiva, setCategoriaActiva] = useState<string | null>(null)
   const [recetaSeleccionada, setRecetaSeleccionada] = useState<Receta | null>(null)
 
@@ -53,28 +51,7 @@ export function RecipeList() {
   const hayRecetas = recetas.length > 0
 
   return (
-    <div className="space-y-6">
-      {/* Barra de búsqueda */}
-      {hayRecetas && (
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Buscar receta o ingrediente..."
-            value={busqueda}
-            onChange={(e) => setBusqueda(e.target.value)}
-            className="pl-10 pr-10"
-          />
-          {busqueda && (
-            <button 
-              onClick={() => setBusqueda("")}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-            >
-              <X className="h-4 w-4" />
-            </button>
-          )}
-        </div>
-      )}
-
+    <div className="space-y-4">
       {/* Filtros de categoría */}
       {categoriasConRecetas.length > 1 && (
         <div className="flex gap-2 flex-wrap">
