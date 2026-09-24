@@ -46,10 +46,10 @@ function cleanStr(v: unknown): string {
 }
 
 export async function POST(req: NextRequest) {
-  const apiKey = process.env.OPENAI_API_KEY
+  const apiKey = process.env.GEMINI_API_KEY
   if (!apiKey) {
     return NextResponse.json(
-      { error: "Falta configurar la clave de IA en el servidor (OPENAI_API_KEY)." },
+      { error: "Falta configurar la clave de IA en el servidor (GEMINI_API_KEY)." },
       { status: 503 }
     )
   }
@@ -66,14 +66,15 @@ export async function POST(req: NextRequest) {
 
   let resp: Response
   try {
-    resp = await fetch("https://api.openai.com/v1/chat/completions", {
+    // Gemini (plan gratuito) vía endpoint compatible con OpenAI
+    resp = await fetch("https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: "gpt-4o-mini",
+        model: "gemini-2.5-flash",
         temperature: 0.1,
         max_tokens: 2500,
         response_format: { type: "json_object" },
