@@ -1,22 +1,22 @@
 "use client"
 
-import { useState, useMemo, useRef } from "react"
+import { useState, useMemo } from "react"
 import type { Receta } from "@/lib/types"
 import { RecipeCard } from "./recipe-card"
 import { RecipeDetail } from "./recipe-detail"
-import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Search, ChefHat, X } from "lucide-react"
+import { Search, ChefHat } from "lucide-react"
 
 interface RecipeListProps {
   scrollRef?: React.RefObject<HTMLDivElement | null>
   recetasData: Receta[]
   categoriasData: string[]
+  busqueda?: string
+  onBusquedaChange?: (v: string) => void
 }
 
-export function RecipeList({ scrollRef, recetasData, categoriasData }: RecipeListProps) {
-  const [busqueda, setBusqueda] = useState("")
+export function RecipeList({ scrollRef, recetasData, categoriasData, busqueda = "", onBusquedaChange }: RecipeListProps) {
   const [categoriaActiva, setCategoriaActiva] = useState<string | null>(null)
   const [recetaSeleccionada, setRecetaSeleccionada] = useState<Receta | null>(null)
 
@@ -33,7 +33,7 @@ export function RecipeList({ scrollRef, recetasData, categoriasData }: RecipeLis
         return coincideBusqueda && coincideCategoria
       })
       .sort((a, b) => categoriasData.indexOf(a.categoria) - categoriasData.indexOf(b.categoria))
-  }, [busqueda, categoriaActiva])
+  }, [recetasData, categoriasData, busqueda, categoriaActiva])
 
   const categoriasConRecetas = useMemo(() => {
     const conteo = recetasData.reduce((acc, r) => {
@@ -44,6 +44,11 @@ export function RecipeList({ scrollRef, recetasData, categoriasData }: RecipeLis
       .filter(cat => conteo[cat])
       .map(cat => ({ nombre: cat, total: conteo[cat] }))
   }, [recetasData, categoriasData])
+
+  const limpiarFiltros = () => {
+    setCategoriaActiva(null)
+    onBusquedaChange?.("")
+  }
 
   if (recetaSeleccionada) {
     return (
@@ -62,27 +67,6 @@ export function RecipeList({ scrollRef, recetasData, categoriasData }: RecipeLis
 
   return (
     <div className="space-y-6">
-      {/* Barra de búsqueda */}
-      {hayRecetas && (
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Buscar receta o ingrediente..."
-            value={busqueda}
-            onChange={(e) => setBusqueda(e.target.value)}
-            className="pl-10 pr-10"
-          />
-          {busqueda && (
-            <button
-              onClick={() => setBusqueda("")}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-            >
-              <X className="h-4 w-4" />
-            </button>
-          )}
-        </div>
-      )}
-
       {/* Filtros de categoría */}
       {categoriasConRecetas.length > 1 && (
         <div className="flex gap-2 flex-wrap">
@@ -139,10 +123,7 @@ export function RecipeList({ scrollRef, recetasData, categoriasData }: RecipeLis
               <Button
                 variant="link"
                 className="mt-2"
-                onClick={() => {
-                  setBusqueda("")
-                  setCategoriaActiva(null)
-                }}
+                onClick={limpiarFiltros}
               >
                 Limpiar filtros
               </Button>
