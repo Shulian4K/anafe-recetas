@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/compone
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp"
 
 const PIN = process.env.NEXT_PUBLIC_PIN_PIZARRA ?? "2026"
-const SESSION_KEY = "pizarra_auth"
+const SESSION_KEY = "recetas_auth"
 
 interface PinGateProps {
   open: boolean
@@ -44,7 +44,7 @@ export function PinGate({ open, onUnlock, onClose }: PinGateProps) {
   return (
     <Dialog open={open} onOpenChange={v => !v && onClose()}>
       <DialogContent className="max-w-xs">
-        <DialogTitle className="text-center text-lg">La Pizarra</DialogTitle>
+        <DialogTitle className="text-center text-lg">Agregar receta</DialogTitle>
         <DialogDescription className="text-center">
           Ingresá el PIN para agregar recetas
         </DialogDescription>
@@ -75,7 +75,7 @@ export function PinGate({ open, onUnlock, onClose }: PinGateProps) {
   )
 }
 
-export function isPizarraUnlocked(): boolean {
+export function isEdicionDesbloqueada(): boolean {
   if (typeof window === "undefined") return false
   return sessionStorage.getItem(SESSION_KEY) === "1"
 }

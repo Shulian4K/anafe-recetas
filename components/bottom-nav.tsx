@@ -1,6 +1,6 @@
 "use client"
 
-import { BookOpen, PenLine, UtensilsCrossed } from "lucide-react"
+import { BookOpen, UtensilsCrossed } from "lucide-react"
 
 interface BottomNavProps {
   activeTab: string
@@ -10,7 +10,6 @@ interface BottomNavProps {
 const tabs = [
   { id: "recetas", label: "Recetas", icon: BookOpen },
   { id: "cocina", label: "Cocina", icon: UtensilsCrossed },
-  { id: "pizarra", label: "La Pizarra", icon: PenLine },
 ]
 
 export function BottomNav({ activeTab, onTabChange }: BottomNavProps) {

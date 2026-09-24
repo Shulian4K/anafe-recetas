@@ -12,7 +12,7 @@ interface RecetaPizarraRow {
   rendimiento: string | null
 }
 
-export async function fetchRecetasPizarra(): Promise<Receta[]> {
+export async function fetchRecetasUsuario(): Promise<Receta[]> {
   const supabase = createClient()
   const { data, error } = await supabase
     .from("recetas_pizarra")
@@ -33,7 +33,7 @@ export async function fetchRecetasPizarra(): Promise<Receta[]> {
   }))
 }
 
-export async function insertRecetaPizarra(receta: Omit<Receta, "id">): Promise<void> {
+export async function insertRecetaUsuario(receta: Omit<Receta, "id">): Promise<void> {
   const supabase = createClient()
   const { error } = await supabase.from("recetas_pizarra").insert({
     nombre: receta.nombre,

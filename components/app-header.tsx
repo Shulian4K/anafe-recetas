@@ -7,11 +7,10 @@ interface AppHeaderProps {
   onLogoClick: () => void
   busqueda: string
   onBusquedaChange: (v: string) => void
-  mostrarBusqueda?: boolean
 }
 
-export function AppHeader({ activeTab, onLogoClick, busqueda, onBusquedaChange, mostrarBusqueda = true }: AppHeaderProps) {
-  const subtitle = activeTab === "pizarra" ? "La Pizarra" : activeTab === "cocina" ? "Cocina" : "Recetas"
+export function AppHeader({ activeTab, onLogoClick, busqueda, onBusquedaChange }: AppHeaderProps) {
+  const subtitle = activeTab === "cocina" ? "Cocina" : "Recetas"
 
   return (
     <header className="sticky top-0 z-50 bg-card/95 backdrop-blur-md supports-[backdrop-filter]:bg-card/80 border-b border-border shadow-sm">
@@ -33,8 +32,7 @@ export function AppHeader({ activeTab, onLogoClick, busqueda, onBusquedaChange, 
         </button>
 
         {/* Buscador */}
-        {mostrarBusqueda && (
-          <div className="relative flex-1">
+        <div className="relative flex-1">
             <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
             <input
               type="text"
@@ -53,7 +51,6 @@ export function AppHeader({ activeTab, onLogoClick, busqueda, onBusquedaChange, 
               </button>
             )}
           </div>
-        )}
       </div>
     </header>
   )
