@@ -700,25 +700,6 @@ export const recetas: Receta[] = [
     ],
   },
   {
-    id: "34",
-    nombre: "Arepa",
-    categoria: "Masas",
-    ingredientes: [
-      { nombre: "Agua", cantidad: 1400, unidad: "ml", grupo: "Grupo A" },
-      { nombre: "Sal", cantidad: 45, unidad: "g", grupo: "Grupo A" },
-      { nombre: "Harina de maíz", cantidad: 1, unidad: "kg", grupo: "Grupo B" },
-      { nombre: "Manteca pomada", cantidad: 240, unidad: "g", grupo: "Grupo C" },
-      { nombre: "Queso reggianito", cantidad: 270, unidad: "g", grupo: "Grupo C" },
-    ],
-    instrucciones: [
-      "Diluir sal en agua.",
-      "Agregar harina, hacer una masa y dejar hidratar 10 min.",
-      "Agregar el Grupo C y amasar, que quede sin grumos.",
-      "Porcionar en 80 gr, dar forma y cocinar en darto.",
-    ],
-    notas: "La ficha dice '1400 lt'; por proporción con 1 kg de harina se carga como ml.",
-  },
-  {
     id: "35",
     nombre: "Crema Ácida",
     categoria: "Salsas",
