@@ -64,44 +64,71 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Falta la imagen." }, { status: 400 })
   }
 
-  let resp: Response
-  try {
-    // Gemini (plan gratuito) vía endpoint compatible con OpenAI
-    resp = await fetch("https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
-        model: "gemini-3.8-flash",
-        temperature: 0.1,
-        max_tokens: 2500,
-        response_format: { type: "json_object" },
-        messages: [
-          { role: "system", content: SYSTEM_PROMPT },
-          {
-            role: "user",
-            content: [
-              { type: "text", text: "Transcribí la receta de esta foto al JSON pedido." },
-              { type: "image_url", image_url: { url: image, detail: "high" } },
-            ],
-          },
-        ],
-      }),
-    })
-  } catch {
+  let resp: Response | null = null
+  let lastStatus = 0
+  let lastDetail = ""
+  // Reintentos con espera: el plan gratuito suele devolver 503 por picos de demanda
+  for (let intento = 0; intento < 3; intento++) {
+    if (intento > 0) {
+      await new Promise((r) => setTimeout(r, 4000 * intento))
+    }
+    try {
+      // Gemini (plan gratuito) vía endpoint compatible con OpenAI
+      resp = await fetch("https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+          model: "gemini-3.8-flash",
+          temperature: 0.1,
+          max_tokens: 2500,
+          response_format: { type: "json_object" },
+          messages: [
+            { role: "system", content: SYSTEM_PROMPT },
+            {
+              role: "user",
+              content: [
+                { type: "text", text: "Transcribí la receta de esta foto al JSON pedido." },
+                { type: "image_url", image_url: { url: image, detail: "high" } },
+              ],
+            },
+          ],
+        }),
+      })
+    } catch {
+      resp = null
+    }
+    if (!resp) {
+      lastStatus = 0
+      lastDetail = "sin respuesta"
+      continue
+    }
+    if (resp.ok) break
+    lastStatus = resp.status
+    try {
+      lastDetail = (await resp.text()).slice(0, 300)
+    } catch {
+      lastDetail = ""
+    }
+    // Solo reintentar ante saturación o límites de ritmo
+    if (resp.status !== 503 && resp.status !== 429 && resp.status !== 529) break
+  }
+
+  if (!resp) {
     return NextResponse.json({ error: "No se pudo contactar al servicio de IA." }, { status: 502 })
   }
 
   if (!resp.ok) {
-    let detail = ""
-    try {
-      const t = await resp.text()
-      detail = t.slice(0, 300)
-    } catch { /* noop */ }
+    if (lastStatus === 503 || lastStatus === 429 || lastStatus === 529) {
+      return NextResponse.json(
+        { error: "El servicio de IA está saturado en este momento. Probá de nuevo en unos minutos." },
+        { status: 502 }
+      )
+    }
     return NextResponse.json(
-      { error: `El servicio de IA devolvió un error (${resp.status}). ${detail}` },
+      { error: `El servicio de IA devolvió un error (${lastStatus}). ${lastDetail}` },
       { status: 502 }
     )
   }
