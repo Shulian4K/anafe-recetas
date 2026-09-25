@@ -74,7 +74,7 @@ export async function POST(req: NextRequest) {
         Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: "gemini-2.5-flash",
+        model: "gemini-3.8-flash",
         temperature: 0.1,
         max_tokens: 2500,
         response_format: { type: "json_object" },
