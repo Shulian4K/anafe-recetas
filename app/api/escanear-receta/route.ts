@@ -64,56 +64,84 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Falta la imagen." }, { status: 400 })
   }
 
+  // Modelos en orden de preferencia: cada uno tiene su propio cupo diario gratuito
+  const MODELOS = [
+    "gemini-3.8-flash",
+    "gemini-3.7-flash",
+    "gemini-3.6-flash",
+    "gemini-3.5-flash-lite",
+    "gemini-3.1-flash-lite",
+  ]
+
+  async function llamarGemini(modelo: string): Promise<Response> {
+    return fetch("https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        model: modelo,
+        temperature: 0.1,
+        max_tokens: 2500,
+        response_format: { type: "json_object" },
+        messages: [
+          { role: "system", content: SYSTEM_PROMPT },
+          {
+            role: "user",
+            content: [
+              { type: "text", text: "Transcribí la receta de esta foto al JSON pedido." },
+              { type: "image_url", image_url: { url: image, detail: "high" } },
+            ],
+          },
+        ],
+      }),
+    })
+  }
+
   let resp: Response | null = null
   let lastStatus = 0
   let lastDetail = ""
-  // Reintentos con espera: el plan gratuito suele devolver 503 por picos de demanda
-  for (let intento = 0; intento < 3; intento++) {
-    if (intento > 0) {
-      await new Promise((r) => setTimeout(r, 4000 * intento))
+  let saturado = false
+  // Por cada modelo: hasta 2 intentos (el plan gratuito suele devolver 503 por picos de demanda)
+  for (const modelo of MODELOS) {
+    let modeloDescartado = false
+    for (let intento = 0; intento < 2; intento++) {
+      if (intento > 0) {
+        await new Promise((r) => setTimeout(r, 4000))
+      }
+      try {
+        resp = await llamarGemini(modelo)
+      } catch {
+        resp = null
+      }
+      if (!resp) {
+        lastStatus = 0
+        lastDetail = "sin respuesta"
+        continue
+      }
+      if (resp.ok) break
+      lastStatus = resp.status
+      try {
+        lastDetail = (await resp.text()).slice(0, 300)
+      } catch {
+        lastDetail = ""
+      }
+      // 404 = modelo no disponible: pasar al siguiente sin reintentar
+      if (resp.status === 404) {
+        modeloDescartado = true
+        break
+      }
+      // Saturación o límite de ritmo: reintentar, y si persiste, probar el siguiente modelo
+      if (resp.status !== 503 && resp.status !== 429 && resp.status !== 529) break
+      saturado = true
     }
-    try {
-      // Gemini (plan gratuito) vía endpoint compatible con OpenAI
-      resp = await fetch("https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${apiKey}`,
-        },
-        body: JSON.stringify({
-          model: "gemini-3.8-flash",
-          temperature: 0.1,
-          max_tokens: 2500,
-          response_format: { type: "json_object" },
-          messages: [
-            { role: "system", content: SYSTEM_PROMPT },
-            {
-              role: "user",
-              content: [
-                { type: "text", text: "Transcribí la receta de esta foto al JSON pedido." },
-                { type: "image_url", image_url: { url: image, detail: "high" } },
-              ],
-            },
-          ],
-        }),
-      })
-    } catch {
-      resp = null
-    }
-    if (!resp) {
-      lastStatus = 0
-      lastDetail = "sin respuesta"
+    if (resp?.ok || modeloDescartado) {
+      if (resp?.ok) break
       continue
     }
-    if (resp.ok) break
-    lastStatus = resp.status
-    try {
-      lastDetail = (await resp.text()).slice(0, 300)
-    } catch {
-      lastDetail = ""
-    }
-    // Solo reintentar ante saturación o límites de ritmo
-    if (resp.status !== 503 && resp.status !== 429 && resp.status !== 529) break
+    // Si el modelo respondió con un error definitivo, no seguir probando
+    if (lastStatus !== 503 && lastStatus !== 429 && lastStatus !== 529) break
   }
 
   if (!resp) {
