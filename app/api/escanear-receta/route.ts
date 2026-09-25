@@ -95,7 +95,15 @@ export async function POST(req: NextRequest) {
   }
 
   if (!resp.ok) {
-    return NextResponse.json({ error: "El servicio de IA devolvió un error." }, { status: 502 })
+    let detail = ""
+    try {
+      const t = await resp.text()
+      detail = t.slice(0, 300)
+    } catch { /* noop */ }
+    return NextResponse.json(
+      { error: `El servicio de IA devolvió un error (${resp.status}). ${detail}` },
+      { status: 502 }
+    )
   }
 
   let parsed: {
