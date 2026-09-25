@@ -105,7 +105,6 @@ export function EscanearRecetaSheet({ open, onClose, onSuccess }: Props) {
 
   const handleTranscribir = async () => {
     if (!foto) { setError("Sacá o elegí una foto de la ficha."); return }
-    if (!categoria) { setError("Elegí la categoría."); return }
     setPaso("transcribiendo")
     setError(null)
     try {
@@ -117,6 +116,10 @@ export function EscanearRecetaSheet({ open, onClose, onSuccess }: Props) {
       const data = await resp.json()
       if (!resp.ok) throw new Error(data.error || "Error al transcribir.")
       setNombre(data.nombre ?? "")
+      // Si no se eligió categoría manualmente, usar la detectada por la IA
+      if (typeof data.categoria === "string" && categoriasRecetas.includes(data.categoria)) {
+        setCategoria(prev => prev || data.categoria)
+      }
       setIngredientes((data.ingredientes ?? []).map((i: { nombre: string; cantidad: number; unidad: string; grupo?: string }) =>
         newIng({ nombre: i.nombre, cantidad: i.cantidad, unidad: i.unidad, grupo: i.grupo ?? "" })
       ))
@@ -217,11 +220,11 @@ export function EscanearRecetaSheet({ open, onClose, onSuccess }: Props) {
                 )}
               </div>
 
-              {/* Categoría */}
+              {/* Categoría (opcional: la IA la detecta) */}
               <div className="space-y-1.5">
-                <Label>Categoría</Label>
+                <Label>Categoría <span className="text-muted-foreground font-normal">(opcional, la IA la detecta)</span></Label>
                 <Select value={categoria} onValueChange={setCategoria} disabled={paso === "transcribiendo"}>
-                  <SelectTrigger><SelectValue placeholder="Seleccioná una categoría" /></SelectTrigger>
+                  <SelectTrigger><SelectValue placeholder="La IA la detecta sola" /></SelectTrigger>
                   <SelectContent>
                     {categoriasRecetas.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}
                   </SelectContent>
@@ -233,7 +236,7 @@ export function EscanearRecetaSheet({ open, onClose, onSuccess }: Props) {
                 {paso === "transcribiendo" ? "Leyendo la ficha..." : "Transcribir receta"}
               </Button>
               <p className="text-xs text-muted-foreground text-center -mt-3">
-                La IA lee la foto y completa los datos. Después los revisás antes de guardar.
+                La IA lee la foto, detecta la categoría y completa los datos. Después los revisás antes de guardar.
               </p>
             </>
           ) : (

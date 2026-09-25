@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
+import { categoriasRecetas } from "@/lib/data-store"
 
 export const maxDuration = 60
 
@@ -7,6 +8,7 @@ Recibís la foto de una ficha de receta y la transcribís a JSON con este format
 
 {
   "nombre": "Nombre de la receta en mayúsculas como figura en la ficha",
+  "categoria": "una de las categorías de la lista",
   "ingredientes": [
     { "nombre": "nombre del ingrediente", "cantidad": 500, "unidad": "g", "grupo": "Grupo A" }
   ],
@@ -14,6 +16,16 @@ Recibís la foto de una ficha de receta y la transcribís a JSON con este format
   "notas": "notas opcionales",
   "rendimiento": "rinde opcional"
 }
+
+Categorías disponibles (elegí la que mejor corresponda):
+- Masas: masas, panes, pastas
+- Purés: purés de verduras, de frutos secos
+- Salsas: salsas, vinagretas, emulsiones, aliolis, aderezos
+- Conservas: pickles, curados, chutneys
+- Fondos: caldos, fumets, demi glace, fondos
+- Elaboraciones: preparaciones principales (proteínas, patés, ricota, ragú)
+- Guarniciones: acompañamientos (vegetales, arroz, frutas)
+- Condimentos: especias, mezclas secas, toppings crocantes
 
 Reglas:
 - Transcribí FIELMENTE: nombres, cantidades y unidades tal como figuran (g, kg, ml, l, u, c/n, tazas, cucharadas, tbsp).
@@ -163,6 +175,7 @@ export async function POST(req: NextRequest) {
 
   let parsed: {
     nombre?: unknown
+    categoria?: unknown
     ingredientes?: unknown
     instrucciones?: unknown
     notas?: unknown
@@ -199,8 +212,12 @@ export async function POST(req: NextRequest) {
     )
   }
 
+  const categoriaAI = cleanStr(parsed.categoria)
+  const categoria = categoriasRecetas.includes(categoriaAI) ? categoriaAI : undefined
+
   return NextResponse.json({
     nombre,
+    ...(categoria ? { categoria } : {}),
     ingredientes,
     instrucciones,
     ...(cleanStr(parsed.notas) ? { notas: cleanStr(parsed.notas) } : {}),
