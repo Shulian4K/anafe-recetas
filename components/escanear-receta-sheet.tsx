@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { categoriasRecetas } from "@/lib/data-store"
+import { categoriasRecetas, categoriasPasteleria } from "@/lib/data-store"
 import { insertRecetaUsuario } from "@/lib/supabase-recetas"
 
 const UNIDADES = ["g", "kg", "ml", "l", "cc", "u", "c/n", "a gusto", "cucharada", "cucharadita", "taza", "tbsp", "dientes", "hojas", "ramas"]
@@ -37,6 +37,7 @@ interface Props {
   open: boolean
   onClose: () => void
   onSuccess: () => void
+  seccion?: "recetas" | "pasteleria"
 }
 
 async function downscaleImage(file: File): Promise<string> {
@@ -65,7 +66,8 @@ async function downscaleImage(file: File): Promise<string> {
   }
 }
 
-export function EscanearRecetaSheet({ open, onClose, onSuccess }: Props) {
+export function EscanearRecetaSheet({ open, onClose, onSuccess, seccion = "recetas" }: Props) {
+  const categorias = seccion === "pasteleria" ? categoriasPasteleria : categoriasRecetas
   const [paso, setPaso] = useState<Paso>("foto")
   const [foto, setFoto] = useState<string | null>(null)
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
@@ -111,13 +113,13 @@ export function EscanearRecetaSheet({ open, onClose, onSuccess }: Props) {
       const resp = await fetch("/api/escanear-receta", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ image: foto }),
+        body: JSON.stringify({ image: foto, seccion }),
       })
       const data = await resp.json()
       if (!resp.ok) throw new Error(data.error || "Error al transcribir.")
       setNombre(data.nombre ?? "")
       // Si no se eligió categoría manualmente, usar la detectada por la IA
-      if (typeof data.categoria === "string" && categoriasRecetas.includes(data.categoria)) {
+      if (typeof data.categoria === "string" && categorias.includes(data.categoria)) {
         setCategoria(prev => prev || data.categoria)
       }
       setIngredientes((data.ingredientes ?? []).map((i: { nombre: string; cantidad: number; unidad: string; grupo?: string }) =>
@@ -226,7 +228,7 @@ export function EscanearRecetaSheet({ open, onClose, onSuccess }: Props) {
                 <Select value={categoria} onValueChange={setCategoria} disabled={paso === "transcribiendo"}>
                   <SelectTrigger><SelectValue placeholder="La IA la detecta sola" /></SelectTrigger>
                   <SelectContent>
-                    {categoriasRecetas.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}
+                    {categorias.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}
                   </SelectContent>
                 </Select>
               </div>
@@ -256,7 +258,7 @@ export function EscanearRecetaSheet({ open, onClose, onSuccess }: Props) {
                 <Select value={categoria} onValueChange={setCategoria}>
                   <SelectTrigger><SelectValue /></SelectTrigger>
                   <SelectContent>
-                    {categoriasRecetas.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}
+                    {categorias.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}
                   </SelectContent>
                 </Select>
               </div>

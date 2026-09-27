@@ -1,9 +1,28 @@
 import { NextRequest, NextResponse } from "next/server"
-import { categoriasRecetas } from "@/lib/data-store"
+import { categoriasRecetas, categoriasPasteleria } from "@/lib/data-store"
 
 export const maxDuration = 60
 
-const SYSTEM_PROMPT = `Sos el transcriptor de fichas de cocina del restaurante Anafe.
+const DESCRIPCION_CATEGORIAS: Record<string, string> = {
+  "Masas": "masas, panes, pastas",
+  "Purés": "purés de verduras, de frutos secos",
+  "Salsas": "salsas, vinagretas, emulsiones, aliolis, aderezos",
+  "Conservas": "pickles, curados, chutneys",
+  "Fondos": "caldos, fumets, demi glace, fondos",
+  "Elaboraciones": "preparaciones principales (proteínas, patés, ricota, ragú)",
+  "Guarniciones": "acompañamientos (vegetales, arroz, frutas)",
+  "Condimentos": "especias, mezclas secas, toppings crocantes",
+  "Tortas": "tortas, tartas, bizcochuelos",
+  "Postres": "postres de cuchara, flanes, mousses",
+  "Masas dulces": "masas quebradas, sablée, hojaldre dulce",
+  "Cremas y rellenos": "crema pastelera, ganaches, rellenos",
+  "Chocolatería": "bombones, tabletas, decoraciones de chocolate",
+}
+
+function buildSystemPrompt(seccion: "recetas" | "pasteleria", categorias: string[]) {
+  const rubro = seccion === "pasteleria" ? "pastelería" : "cocina"
+  const lista = categorias.map(c => `- ${c}: ${DESCRIPCION_CATEGORIAS[c] ?? ""}`).join("\n")
+  return `Sos el transcriptor de fichas de ${rubro} del restaurante Anafe.
 Recibís la foto de una ficha de receta y la transcribís a JSON con este formato EXACTO:
 
 {
@@ -18,24 +37,19 @@ Recibís la foto de una ficha de receta y la transcribís a JSON con este format
 }
 
 Categorías disponibles (elegí la que mejor corresponda):
-- Masas: masas, panes, pastas
-- Purés: purés de verduras, de frutos secos
-- Salsas: salsas, vinagretas, emulsiones, aliolis, aderezos
-- Conservas: pickles, curados, chutneys
-- Fondos: caldos, fumets, demi glace, fondos
-- Elaboraciones: preparaciones principales (proteínas, patés, ricota, ragú)
-- Guarniciones: acompañamientos (vegetales, arroz, frutas)
-- Condimentos: especias, mezclas secas, toppings crocantes
+${lista}
 
 Reglas:
 - Transcribí FIELMENTE: nombres, cantidades y unidades tal como figuran (g, kg, ml, l, u, c/n, tazas, cucharadas, tbsp).
 - "cantidad" siempre número. Si dice "c/n" o "a gusto", cantidad 0 y unidad "c/n" o "a gusto".
+- Si la ficha trae versiones x1 y x2 de la receta, transcribí la versión x1 (la base); las cantidades deben poder dividirse o multiplicarse después.
 - Conservá los grupos (A, B, C, D) en el campo "grupo" como "Grupo A", "Grupo B", etc. Si la ficha usa otros nombres de grupo, usalos tal cual.
 - Los pasos en "instrucciones" como lista de strings, en orden.
 - Si hay correcciones manuscritas sobre el texto impreso, vale lo manuscrito.
 - Si la foto contiene varias recetas, transcribí SOLO la primera/principal.
 - "notas" y "rendimiento" solo si figuran en la ficha; si no, omitilos.
 - Respondé ÚNICAMENTE con el JSON, sin explicaciones ni markdown.`
+}
 
 interface IngredienteAI {
   nombre?: unknown
@@ -67,11 +81,16 @@ export async function POST(req: NextRequest) {
   }
 
   let image: unknown
+  let seccion: "recetas" | "pasteleria" = "recetas"
   try {
-    image = (await req.json()).image
+    const body = await req.json()
+    image = body.image
+    if (body.seccion === "pasteleria") seccion = "pasteleria"
   } catch {
     return NextResponse.json({ error: "Pedido inválido." }, { status: 400 })
   }
+  const categorias = seccion === "pasteleria" ? categoriasPasteleria : categoriasRecetas
+  const SYSTEM_PROMPT = buildSystemPrompt(seccion, categorias)
   if (typeof image !== "string" || !image.startsWith("data:image/")) {
     return NextResponse.json({ error: "Falta la imagen." }, { status: 400 })
   }
@@ -213,7 +232,7 @@ export async function POST(req: NextRequest) {
   }
 
   const categoriaAI = cleanStr(parsed.categoria)
-  const categoria = categoriasRecetas.includes(categoriaAI) ? categoriaAI : undefined
+  const categoria = categorias.includes(categoriaAI) ? categoriaAI : undefined
 
   return NextResponse.json({
     nombre,

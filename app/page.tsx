@@ -3,14 +3,16 @@
 import { useState, useRef, useEffect, useMemo, useCallback } from "react"
 import { ScanLine } from "lucide-react"
 import { AppHeader } from "@/components/app-header"
+import { BottomNav } from "@/components/bottom-nav"
 import { RecipeList } from "@/components/recipe-list"
 import { PinGate, isEdicionDesbloqueada } from "@/components/pin-gate"
 import { EscanearRecetaSheet } from "@/components/escanear-receta-sheet"
-import { recetas, categoriasRecetas } from "@/lib/data-store"
+import { recetas, categoriasRecetas, recetasPasteleria, categoriasPasteleria } from "@/lib/data-store"
 import { fetchRecetasUsuario } from "@/lib/supabase-recetas"
 import type { Receta } from "@/lib/types"
 
 export default function Home() {
+  const [activeTab, setActiveTab] = useState("recetas")
   const [resetKey, setResetKey] = useState(0)
   const [busqueda, setBusqueda] = useState("")
   const [recetasUsuario, setRecetasUsuario] = useState<Receta[]>([])
@@ -28,15 +30,34 @@ export default function Home() {
 
   useEffect(() => { cargarUsuario() }, [cargarUsuario])
 
-  const recetasTotales = useMemo(() => [...recetas, ...recetasUsuario], [recetasUsuario])
+  // Las recetas de usuario se asignan a cada sección por categoría
+  const recetasUsuarioRecetas = useMemo(
+    () => recetasUsuario.filter(r => !categoriasPasteleria.includes(r.categoria)),
+    [recetasUsuario]
+  )
+  const recetasUsuarioPasteleria = useMemo(
+    () => recetasUsuario.filter(r => categoriasPasteleria.includes(r.categoria)),
+    [recetasUsuario]
+  )
+
+  const recetasTotales = useMemo(() => [...recetas, ...recetasUsuarioRecetas], [recetasUsuarioRecetas])
+  const pasteleriaTotales = useMemo(() => [...recetasPasteleria, ...recetasUsuarioPasteleria], [recetasUsuarioPasteleria])
 
   const scrollToTop = (smooth = false) =>
     mainRef.current?.scrollTo({ top: 0, behavior: smooth ? "smooth" : "instant" })
 
   const handleLogoClick = () => {
+    setActiveTab("recetas")
     setBusqueda("")
     setResetKey(k => k + 1)
     scrollToTop(true)
+  }
+
+  const handleTabChange = (tab: string) => {
+    setActiveTab(tab)
+    setBusqueda("")
+    setResetKey(k => k + 1)
+    scrollToTop()
   }
 
   const handleEscanear = () => {
@@ -60,25 +81,39 @@ export default function Home() {
 
       <div ref={mainRef} className="flex-1 overflow-y-auto">
         <div className="px-2 py-4 pb-24 max-w-2xl mx-auto">
-          <RecipeList
-            key={`recetas-${resetKey}`}
-            scrollRef={mainRef}
-            recetasData={recetasTotales}
-            categoriasData={categoriasRecetas}
-            busqueda={busqueda}
-            onBusquedaChange={setBusqueda}
-          />
+          {activeTab === "recetas" && (
+            <RecipeList
+              key={`recetas-${resetKey}`}
+              scrollRef={mainRef}
+              recetasData={recetasTotales}
+              categoriasData={categoriasRecetas}
+              busqueda={busqueda}
+              onBusquedaChange={setBusqueda}
+            />
+          )}
+          {activeTab === "pasteleria" && (
+            <RecipeList
+              key={`pasteleria-${resetKey}`}
+              scrollRef={mainRef}
+              recetasData={pasteleriaTotales}
+              categoriasData={categoriasPasteleria}
+              busqueda={busqueda}
+              onBusquedaChange={setBusqueda}
+            />
+          )}
         </div>
       </div>
 
       <button
         onClick={handleEscanear}
         aria-label="Escanear receta"
-        className="fixed bottom-6 right-4 z-40 flex items-center gap-2 rounded-full bg-primary text-primary-foreground pl-4 pr-5 py-3 shadow-lg active:scale-95 transition-transform"
+        className="fixed bottom-20 right-4 z-40 flex items-center gap-2 rounded-full bg-primary text-primary-foreground pl-4 pr-5 py-3 shadow-lg active:scale-95 transition-transform"
       >
         <ScanLine className="h-5 w-5" />
         <span className="text-sm font-semibold">Escanear</span>
       </button>
+
+      <BottomNav activeTab={activeTab} onTabChange={handleTabChange} />
 
       <PinGate
         open={showPin}
@@ -89,6 +124,7 @@ export default function Home() {
         open={showScan}
         onClose={() => setShowScan(false)}
         onSuccess={handleScanSuccess}
+        seccion={activeTab === "pasteleria" ? "pasteleria" : "recetas"}
       />
     </div>
   )

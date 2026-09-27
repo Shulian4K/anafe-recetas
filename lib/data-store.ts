@@ -1106,6 +1106,19 @@ export const categoriasRecetas = [
   "Condimentos"
 ]
 
+// Recetas de pastelería (sección separada, base vacía: se cargan por escáner)
+export const recetasPasteleria: Receta[] = []
+
+// Categorías de pastelería (no deben solaparse con categoriasRecetas:
+// las recetas de usuario se asignan a cada sección por categoría)
+export const categoriasPasteleria = [
+  "Tortas",
+  "Postres",
+  "Masas dulces",
+  "Cremas y rellenos",
+  "Chocolatería",
+]
+
 // Categorías de notas
 export const categoriasNotas = [
   "Conversiones",
