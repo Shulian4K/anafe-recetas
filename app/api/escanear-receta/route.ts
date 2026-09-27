@@ -17,6 +17,7 @@ const DESCRIPCION_CATEGORIAS: Record<string, string> = {
   "Masas dulces": "masas quebradas, sablée, hojaldre dulce",
   "Cremas y rellenos": "crema pastelera, ganaches, rellenos",
   "Chocolatería": "bombones, tabletas, decoraciones de chocolate",
+  "Panadería": "panes, focaccia, marineras, masas saladas horneadas",
 }
 
 function buildSystemPrompt(seccion: "recetas" | "pasteleria", categorias: string[]) {

@@ -7,7 +7,6 @@ const categoryStyle: Record<string, { bg: string; text: string }> = {
   "Salsas":     { bg: "bg-emerald-300", text: "text-emerald-900" },
   "Masas":      { bg: "bg-amber-300",   text: "text-amber-900"   },
   "Purés":      { bg: "bg-violet-300",  text: "text-violet-900"  },
-  "Panadería":  { bg: "bg-yellow-300",  text: "text-yellow-900"  },
   "Pastelería": { bg: "bg-rose-300",    text: "text-rose-900"    },
   "Conservas":  { bg: "bg-teal-300",    text: "text-teal-900"    },
   "Fondos":        { bg: "bg-sky-300",     text: "text-sky-900"     },
@@ -15,6 +14,13 @@ const categoryStyle: Record<string, { bg: string; text: string }> = {
   "Guarniciones":  { bg: "bg-lime-300",    text: "text-lime-900"    },
   "Condimentos":   { bg: "bg-pink-300",    text: "text-pink-900"    },
   "Otros":      { bg: "bg-slate-300",   text: "text-slate-900"   },
+  // Pastelería: familia de verde botella
+  "Tortas":            { bg: "bg-[#2a524a]", text: "text-[#eef4f0]" },
+  "Postres":           { bg: "bg-[#234741]", text: "text-[#eef4f0]" },
+  "Masas dulces":      { bg: "bg-[#315c50]", text: "text-[#eef4f0]" },
+  "Cremas y rellenos": { bg: "bg-[#2e5049]", text: "text-[#eef4f0]" },
+  "Chocolatería":      { bg: "bg-[#1f3d36]", text: "text-[#eef4f0]" },
+  "Panadería":         { bg: "bg-[#35614f]", text: "text-[#eef4f0]" },
 }
 
 const recipeIcon: Record<string, LucideIcon> = {

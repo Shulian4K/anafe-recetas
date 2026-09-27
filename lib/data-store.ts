@@ -1068,52 +1068,6 @@ export const recetas: Receta[] = [
       "Retirar del fuego, licuar y tamizar.",
       "Disolver la maizena con el agua (Grupo B) y agregar a la preparación. Volver a llevar a hervor.",
     ],
-  },  {
-    id: "52",
-    nombre: "Marinera de Oliva",
-    categoria: "Masas",
-    ingredientes: [
-      { nombre: "Echalote picado", cantidad: 30, unidad: "g", grupo: "Grupo A" },
-      { nombre: "Aceite de oliva", cantidad: 200, unidad: "ml", grupo: "Grupo B" },
-      { nombre: "Agua", cantidad: 200, unidad: "ml", grupo: "Grupo B" },
-      { nombre: "Harina 000", cantidad: 500, unidad: "g", grupo: "Grupo B" },
-      { nombre: "Sal fina", cantidad: 10, unidad: "g", grupo: "Grupo B" },
-      { nombre: "Semolín", cantidad: 20, unidad: "g", grupo: "Grupo C" },
-    ],
-    instrucciones: [
-      "Sudar el echalote sin color en una olla con un poco de aceite.",
-      "En batidora agregar todos los ingredientes y con accesorio gancho mezclar por 6 a 8 minutos.",
-      "Estirar en sobadora hasta el número 3 o 4 con semolín, y agregar sal en escamas bien esparcida.",
-      "Hornear a 170°C x 7 min, ventilación 1, 0 de humedad.",
-    ],
-  },
-  {
-    id: "53",
-    nombre: "Focaccia",
-    categoria: "Masas",
-    ingredientes: [
-      { nombre: "Harina", cantidad: 1840, unidad: "g" },
-      { nombre: "Sémola", cantidad: 460, unidad: "g" },
-      { nombre: "Levadura fresca", cantidad: 7, unidad: "g" },
-      { nombre: "Agua filtrada", cantidad: 1610, unidad: "ml" },
-      { nombre: "Aceite de oliva", cantidad: 230, unidad: "ml" },
-      { nombre: "Azúcar mascavo", cantidad: 23, unidad: "g" },
-      { nombre: "Sal", cantidad: 69, unidad: "g" },
-      { nombre: "Everything seasoning", cantidad: 170, unidad: "g", grupo: "Por placa" },
-      { nombre: "Aceite de oliva", cantidad: 150, unidad: "ml", grupo: "Por placa" },
-    ],
-    instrucciones: [
-      "Poner todo menos la sal en la batidora. Mezclar hasta unir, frenar y dejarlo ahí 30 min haciendo autolisis.",
-      "Pasados los 30 minutos, amasar bastante tiempo intercalando entre velocidades 2 y 3, hasta que veas que se despega de los bordes, cachetea contra el bowl y está bien elástica. Prueba de la ventana para ver el desarrollo del gluten.",
-      "Agregar la sal, amasar hasta que se incorpore y pasarla a un cambro aceitado.",
-      "En el cambro hacer los primeros pliegues con los brazos aceitados: agarrar la masa con las dos manos, cada una en un lateral paralelo, y estirar para arriba dejando que los otros extremos caigan, y doblar para adentro. Girar y repetir con los otros 2 laterales. Cubrirla con papel film en contacto y dejarla descansar 40 min a temperatura ambiente.",
-      "Pasados los 40 min repetir los pliegues. Repetir este procedimiento cada 40 min por 6 hs. HAY QUE IR VIENDO CÓMO FERMENTA LA MASA SEGÚN LA TEMPERATURA: si empieza a salir del cambro hay que mandarla a frío, pero seguir dando los pliegues hasta cumplir las 6 horas.",
-      "Al terminar las 6 hs, pasarla a placa aceitada y enharinada y dejarla tapada con papel film; pasarla a frío hasta el otro día.",
-      "Al otro día sacarla de heladera y dejarla que se atempere y crezca un poco más. Tirarle aceite de oliva, everything seasoning crudo y hundirle los dedos.",
-      "Cocinar primero a 220°C x 15 min y luego 190°C x 10 min. Convección 1.",
-    ],
-    notas: "Receta para 1 placa. Lun-jue: 2 placas; vie-dom: 3 placas. En verano el tiempo de fermentación a temperatura ambiente puede ser más corto: ver según la temperatura.",
-    rendimiento: "1 placa grande (1500 gr)",
   },
 ]
 
@@ -1696,6 +1650,53 @@ export const recetasPasteleria: Receta[] = [
       "Batir el Grupo A hasta casi chantilly. Unir con el yogur.",
     ],
   },
+  {
+    id: "p29",
+    nombre: "Marinera de Oliva",
+    categoria: "Panadería",
+    ingredientes: [
+      { nombre: "Echalote picado", cantidad: 30, unidad: "g", grupo: "Grupo A" },
+      { nombre: "Aceite de oliva", cantidad: 200, unidad: "ml", grupo: "Grupo B" },
+      { nombre: "Agua", cantidad: 200, unidad: "ml", grupo: "Grupo B" },
+      { nombre: "Harina 000", cantidad: 500, unidad: "g", grupo: "Grupo B" },
+      { nombre: "Sal fina", cantidad: 10, unidad: "g", grupo: "Grupo B" },
+      { nombre: "Semolín", cantidad: 20, unidad: "g", grupo: "Grupo C" },
+    ],
+    instrucciones: [
+      "Sudar el echalote sin color en una olla con un poco de aceite.",
+      "En batidora agregar todos los ingredientes y con accesorio gancho mezclar por 6 a 8 minutos.",
+      "Estirar en sobadora hasta el número 3 o 4 con semolín, y agregar sal en escamas bien esparcida.",
+      "Hornear a 170°C x 7 min, ventilación 1, 0 de humedad.",
+    ],
+  },
+  {
+    id: "p30",
+    nombre: "Focaccia",
+    categoria: "Panadería",
+    ingredientes: [
+      { nombre: "Harina", cantidad: 1840, unidad: "g" },
+      { nombre: "Sémola", cantidad: 460, unidad: "g" },
+      { nombre: "Levadura fresca", cantidad: 7, unidad: "g" },
+      { nombre: "Agua filtrada", cantidad: 1610, unidad: "ml" },
+      { nombre: "Aceite de oliva", cantidad: 230, unidad: "ml" },
+      { nombre: "Azúcar mascavo", cantidad: 23, unidad: "g" },
+      { nombre: "Sal", cantidad: 69, unidad: "g" },
+      { nombre: "Everything seasoning", cantidad: 170, unidad: "g", grupo: "Por placa" },
+      { nombre: "Aceite de oliva", cantidad: 150, unidad: "ml", grupo: "Por placa" },
+    ],
+    instrucciones: [
+      "Poner todo menos la sal en la batidora. Mezclar hasta unir, frenar y dejarlo ahí 30 min haciendo autolisis.",
+      "Pasados los 30 minutos, amasar bastante tiempo intercalando entre velocidades 2 y 3, hasta que veas que se despega de los bordes, cachetea contra el bowl y está bien elástica. Prueba de la ventana para ver el desarrollo del gluten.",
+      "Agregar la sal, amasar hasta que se incorpore y pasarla a un cambro aceitado.",
+      "En el cambro hacer los primeros pliegues con los brazos aceitados: agarrar la masa con las dos manos, cada una en un lateral paralelo, y estirar para arriba dejando que los otros extremos caigan, y doblar para adentro. Girar y repetir con los otros 2 laterales. Cubrirla con papel film en contacto y dejarla descansar 40 min a temperatura ambiente.",
+      "Pasados los 40 min repetir los pliegues. Repetir este procedimiento cada 40 min por 6 hs. HAY QUE IR VIENDO CÓMO FERMENTA LA MASA SEGÚN LA TEMPERATURA: si empieza a salir del cambro hay que mandarla a frío, pero seguir dando los pliegues hasta cumplir las 6 horas.",
+      "Al terminar las 6 hs, pasarla a placa aceitada y enharinada y dejarla tapada con papel film; pasarla a frío hasta el otro día.",
+      "Al otro día sacarla de heladera y dejarla que se atempere y crezca un poco más. Tirarle aceite de oliva, everything seasoning crudo y hundirle los dedos.",
+      "Cocinar primero a 220°C x 15 min y luego 190°C x 10 min. Convección 1.",
+    ],
+    notas: "Receta para 1 placa. Lun-jue: 2 placas; vie-dom: 3 placas. En verano el tiempo de fermentación a temperatura ambiente puede ser más corto: ver según la temperatura.",
+    rendimiento: "1 placa grande (1500 gr)",
+  },
 ]
 
 
@@ -1707,6 +1708,7 @@ export const categoriasPasteleria = [
   "Masas dulces",
   "Cremas y rellenos",
   "Chocolatería",
+  "Panadería",
 ]
 
 // Categorías de notas
